@@ -78,3 +78,10 @@ Shortest route: an always-on Linux server, Docker Compose and TLS reverse proxy.
 Docker Compose serves http://localhost:3000 with the supplied server-side key. The active database is in `agentvora_agentvora-data`; existing local history was imported with an integrity check. `data/agentvora.db` remains a separate backup/source for local development, not a live mirror of later Docker writes. Seven validation runs and 55 genuine reports are retained. Research scheduling is paused because of the account daily allowance. After sufficient allowance replenishes, choose a schedule/asset count within that allowance before enabling it. The default six-asset, 30-minute schedule needs substantially more than a 200,000-token daily allowance.
 
 Credential update: the owner supplied a replacement primary and separate backup key on 2026-10-18. Both authenticated via the non-generative model-list endpoint. Both are stored only in ignored `.env`; automatic server-side failover is implemented. Scheduling remains paused, and no new council run was started for this credential update. Prior quota measurements refer to the earlier credential/account state.
+
+
+## Latest UI and intraday work (2026-10-18)
+
+Replaced the former chart library with an original responsive SVG renderer, removing visible TradingView branding/credit. Seven real intervals (1m/5m/15m/30m/1h/4h/1d); five styles; keyboard/pointer zoom and pan; crosshair, volume, Python overlays and paper trade links. Added Bitstamp history/trade-driven updates and optional Alpaca IEX subscriptions. Public stocks retain delayed/closed/stale labeling. Live landing ticker, interactive floating cards, computed price-bias/indicator surfaces and actual research state feed; Markdown report rendering throughout. Opening pages makes no model requests. Research scheduler is still paused. Credentials are unchanged and stay server-side in ignored .env.
+
+The active database remains the Docker named volume. Do not replace it with the host backup. See docs/verification.md for actual market-data evidence. User .vscode directory is untracked and untouched.
