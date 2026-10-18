@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useEvents } from "./api";
+import { useLiveMarket, useQuoteState } from "./useLiveMarket";
+import { LiveResearch, LiveAnalytics, MarketTicker, SentimentCard, MotionRegion } from "./LiveSurfaces";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -14,21 +18,21 @@ import {
 import { useApi } from "./api";
 import { Brand, Theme, Label } from "./ui";
 import { money, pct } from "./format";
-import type { Snapshot } from "./types";
 function MarketCard({
   symbol,
   name,
   index,
+  active,
+  onSelect,
 }: {
   symbol: string;
   name: string;
   index: number;
+  active: boolean;
+  onSelect: () => void;
 }) {
-  const { data } = useApi<Snapshot>(
-    "market",
-    "/market/" + encodeURIComponent(symbol) + "/candles",
-    60000,
-  );
+  const { data, price, quote } = useLiveMarket(symbol);
+  const state = useQuoteState(quote);
   const rows = data?.candles.slice(-25) || [];
   const min = Math.min(...rows.map((c) => c.close)),
     max = Math.max(...rows.map((c) => c.close));
@@ -39,16 +43,16 @@ function MarketCard({
     )
     .join(" ");
   return (
-    <div className={"market-card market-card-" + index}>
+    <div role="button" tabIndex={0} aria-pressed={active} aria-label={"Select " + symbol + " live market"} onClick={onSelect} onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }} onPointerMove={e => { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; const box = e.currentTarget.getBoundingClientRect(); e.currentTarget.style.setProperty("--tilt-x", ((e.clientY-box.top)/box.height-.5)*-8+"deg"); e.currentTarget.style.setProperty("--tilt-y", ((e.clientX-box.left)/box.width-.5)*8+"deg"); }} onPointerLeave={e => { e.currentTarget.style.setProperty("--tilt-x", "0deg"); e.currentTarget.style.setProperty("--tilt-y", "0deg"); }} className={"market-card market-card-" + index + (active ? " selected-market" : "")}>
       <div className="card-heading">
         <b>{symbol.replace("/USD", "")}</b>
         <ChartNoAxesCombined size={18} />
       </div>
       <small>{name}</small>
-      <div className="quote">
-        {data ? money(data.price) : "\u2014"}{" "}
+      <div className="quote live-number" key={price}>
+        {price ? money(price) : "\u2014"}{" "}
         <span className={data && data.change < 0 ? "negative" : "positive"}>
-          {data ? pct(data.change) : "Awaiting data"}
+          {data ? pct(quote?.change ?? data.change) : "Awaiting data"}
         </span>
       </div>
       <svg
@@ -79,53 +83,10 @@ function MarketCard({
       </svg>
       <div className="mono muted card-foot">
         <Activity size={12} />
-        {data
-          ? data.stale
-            ? "CACHED MARKET DATA"
-            : "MARKET TRACKING"
-          : "CONNECTING"}
+        {state.toUpperCase()} · SELECT TO EXPLORE
         <span className={"dot " + (data ? "" : "dim")} />
       </div>
     </div>
-  );
-}
-function SignalCard({ symbol }: { symbol: string }) {
-  const { data } = useApi<Snapshot>(
-    "market",
-    "/market/" + encodeURIComponent(symbol) + "/candles",
-    60000,
-  );
-  const m = data?.indicators.latest;
-  return (
-    <article className="signal-card">
-      <div className="card-heading">
-        <b>{symbol.replace("/USD", "")}</b>
-        <span className="tag positive">
-          {String(m?.trend || "CONNECTING").toUpperCase()}
-        </span>
-      </div>
-      <div className="signal-metrics">
-        <div>
-          <Label>RSI (14)</Label>
-          <b>{typeof m?.rsi14 === "number" ? m.rsi14.toFixed(1) : "—"}</b>
-        </div>
-        <div>
-          <Label>MOMENTUM</Label>
-          <b>{String(m?.momentum || "—").toUpperCase()}</b>
-        </div>
-        <div>
-          <Label>VOLUME RATIO</Label>
-          <b>
-            {typeof m?.volume_ratio === "number"
-              ? m.volume_ratio.toFixed(2) + "×"
-              : "—"}
-          </b>
-        </div>
-      </div>
-      <small className="mono muted">
-        DETERMINISTIC MARKET SIGNALS · NO SOCIAL INFERENCE
-      </small>
-    </article>
   );
 }
 function CuratedLists() {
@@ -163,6 +124,8 @@ function CuratedLists() {
   );
 }
 export default function Landing() {
+  const [surfaceSymbol, setSurfaceSymbol] = useState("BTC/USD");
+  const { events } = useEvents();
   return (
     <div className="landing">
       <header className="landing-header">
@@ -180,14 +143,7 @@ export default function Landing() {
           </Link>
         </div>
       </header>
-      <div className="ticker-strip">
-        <span>
-          <Radio size={12} /> STOCKS & CRYPTO
-        </span>
-        <span>AAPL · MSFT · NVDA · TSLA</span>
-        <span>BTC / USD · ETH / USD · SOL / USD</span>
-        <span className="positive">AUTONOMOUS RESEARCH · PAPER EXECUTION</span>
-      </div>
+      <MarketTicker />
       <section className="hero">
         <div className="hero-copy">
           <div className="pill">
@@ -231,16 +187,16 @@ export default function Landing() {
               <Label>
                 <Activity size={14} /> RESEARCH
               </Label>
-              <b>Continuous</b>
+              <b>Live market monitor</b>
             </div>
           </div>
         </div>
-        <div className="market-cards" aria-label="Real market snapshots">
-          <MarketCard symbol="NVDA" name="NVIDIA CORPORATION" index={0} />
-          <MarketCard symbol="AAPL" name="APPLE INC." index={1} />
-          <MarketCard symbol="BTC/USD" name="BITCOIN / US DOLLAR" index={2} />
-          <MarketCard symbol="ETH/USD" name="ETHEREUM / US DOLLAR" index={3} />
-        </div>
+        <MotionRegion className="market-cards" aria-label="Real market snapshots">
+          <MarketCard symbol="NVDA" name="NVIDIA CORPORATION" index={0} active={surfaceSymbol === "NVDA"} onSelect={() => setSurfaceSymbol("NVDA")} />
+          <MarketCard symbol="AAPL" name="APPLE INC." index={1} active={surfaceSymbol === "AAPL"} onSelect={() => setSurfaceSymbol("AAPL")} />
+          <MarketCard symbol="BTC/USD" name="BITCOIN / US DOLLAR" index={2} active={surfaceSymbol === "BTC/USD"} onSelect={() => setSurfaceSymbol("BTC/USD")} />
+          <MarketCard symbol="ETH/USD" name="ETHEREUM / US DOLLAR" index={3} active={surfaceSymbol === "ETH/USD"} onSelect={() => setSurfaceSymbol("ETH/USD")} />
+        </MotionRegion>
       </section>
       <section id="intelligence" className="landing-section">
         <Label>AI INTELLIGENCE</Label>
@@ -315,14 +271,12 @@ export default function Landing() {
             <em>continuously.</em>
           </h2>
           <p>
-            Agents stream explicit reports into a shared feed. Every line
-            references evidence and real price levels. This is the desk's public
-            research record.
+            Follow exchange-driven market observations and real analyst reports. Start a research run to watch the six desks work; filed reports retain their source timestamps.
           </p>
           <div className="mini-grid">
             <div>
               <Label>RESEARCH CADENCE</Label>
-              <b>30 minutes</b>
+              <b>On demand + schedule</b>
             </div>
             <div>
               <Label>DELIVERY</Label>
@@ -338,31 +292,7 @@ export default function Landing() {
             </div>
           </div>
         </div>
-        <div className="research-preview">
-          <div className="panel-title">
-            <Activity size={15} /> MULTI-AGENT DESK{" "}
-            <span className="tag">WORKFLOW</span>
-          </div>
-          {[
-            ["MARKET DESK", "Price structure, momentum and volatility."],
-            [
-              "RESEARCH COUNCIL",
-              "Bull case. Bear case. An evidence-led synthesis.",
-            ],
-            [
-              "RISK & PORTFOLIO",
-              "Constraint checks, explicit decisions, persistent paper accounting.",
-            ],
-          ].map(([title, body]) => (
-            <div className="preview-report" key={title}>
-              <Label>{title}</Label>
-              <p>{body}</p>
-            </div>
-          ))}
-          <Link to="/council" className="text-link">
-            Explore the council <ArrowRight size={15} />
-          </Link>
-        </div>
+        <LiveResearch symbol={surfaceSymbol} events={events} />
       </section>
       <section id="sentiment" className="landing-section">
         <Label>SENTIMENT SURFACE</Label>
@@ -376,7 +306,7 @@ export default function Landing() {
         </p>
         <div className="signal-grid">
           {["NVDA", "AAPL", "BTC/USD"].map((symbol) => (
-            <SignalCard key={symbol} symbol={symbol} />
+            <SentimentCard key={symbol} symbol={symbol} />
           ))}
         </div>
         <div className="process-line">
@@ -420,23 +350,7 @@ export default function Landing() {
             with the same source timestamps.
           </p>
         </div>
-        <div className="mini-grid analytics-preview">
-          {[
-            "RSI (14)",
-            "MACD",
-            "EMA 21",
-            "EMA 50",
-            "VWAP",
-            "ATR (14)",
-            "MOMENTUM",
-            "VOLUME RATIO",
-          ].map((label) => (
-            <div key={label}>
-              <Label>{label}</Label>
-              <span>Computed in Python</span>
-            </div>
-          ))}
-        </div>
+        <LiveAnalytics symbol={surfaceSymbol} />
       </section>
       <section className="closing">
         <div className="pill">THE AGENTVORA TERMINAL</div>
