@@ -92,6 +92,10 @@ _DEFAULT = ModelCapabilities(
 
 # Exact-ID matches take precedence over pattern matches.
 _BY_ID: dict[str, ModelCapabilities] = {
+    # Agentvora patch: Groq GPT-OSS supports native JSON-schema output.
+    # https://console.groq.com/docs/structured-outputs
+    "openai/gpt-oss-20b": ModelCapabilities(True, True, True, "json_schema"),
+    "openai/gpt-oss-120b": ModelCapabilities(True, True, True, "json_schema"),
     "deepseek-chat": _DEEPSEEK_CHAT,
     "deepseek-reasoner": _DEEPSEEK_THINKING,
     "deepseek-flash": _DEEPSEEK_THINKING,

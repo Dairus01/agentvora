@@ -1,2 +1,7 @@
 e8f5503e9b86d5c2710b0c76b1f686703968c9df
 Retrieved 2026-10-17 from https://github.com/TauricResearch/TradingAgents
+Local patch 2026-10-18: llm_clients/capabilities.py selects native json_schema
+for Groq's openai/gpt-oss-20b and openai/gpt-oss-120b models.
+Agent factories remain unchanged. See docs/agents.md.
+Local patch: openai_client.py defaults these two models to strict JSON schema
+when json_schema is selected, retaining the native client and agent factories.

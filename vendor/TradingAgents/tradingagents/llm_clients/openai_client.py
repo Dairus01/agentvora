@@ -52,6 +52,9 @@ class NormalizedChatOpenAI(ChatOpenAI):
         # DeepSeek's official tool-calling examples do.
         if method == "function_calling" and not caps.supports_tool_choice:
             kwargs.setdefault("tool_choice", None)
+        # Agentvora: GPT-OSS on Groq supports constrained JSON-schema output.
+        if method == "json_schema" and self.model_name in ("openai/gpt-oss-20b", "openai/gpt-oss-120b"):
+            kwargs.setdefault("strict", True)
         return super().with_structured_output(schema, method=method, **kwargs)
 
 
