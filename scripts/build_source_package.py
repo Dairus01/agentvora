@@ -13,6 +13,7 @@ ROOT_FILES = (
     "CODEX_HANDOFF.md",
     ".env.example",
     ".gitignore",
+    ".gitattributes",
     ".dockerignore",
     "docker-compose.yml",
     "requirements.lock",
