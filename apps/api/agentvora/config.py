@@ -47,6 +47,8 @@ class Settings(BaseSettings):
     tradingagents_max_tool_rounds: int = 8
     tradingagents_llm_max_retries: int = 4
     tradingagents_max_tokens: int = 2048
+    tradingagents_tokens_per_minute: int = Field(7000, ge=1000)
+    tradingagents_reasoning_effort: str = Field("low", pattern="^(low|medium|high)$")
     tradingagents_temperature: float = 0.1
 
 
