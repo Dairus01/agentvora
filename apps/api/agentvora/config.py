@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     groq_api_key: SecretStr = SecretStr("")
     groq_backup_api_key: SecretStr = SecretStr("")
     database_url: str = "sqlite:///./data/agentvora.db"
-    autonomous_enabled: bool = True
+    autonomous_enabled: bool = False
     autonomous_interval_minutes: int = Field(30, ge=1)
     autonomous_max_concurrent_runs: int = Field(2, ge=1, le=8)
     autonomous_min_confidence: float = Field(0.65, ge=0, le=1)
