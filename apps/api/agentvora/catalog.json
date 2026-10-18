@@ -1,0 +1,1502 @@
+[
+  {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MSFT",
+    "name": "Microsoft Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "TSLA",
+    "name": "Tesla, Inc. ",
+    "market": "stock"
+  },
+  {
+    "symbol": "AMZN",
+    "name": "Amazon.com, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "META",
+    "name": "Meta Platforms, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "AVGO",
+    "name": "Broadcom Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "COST",
+    "name": "Costco Wholesale Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "NFLX",
+    "name": "Netflix, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "AMD",
+    "name": "Advanced Micro Devices, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ADBE",
+    "name": "Adobe Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "QCOM",
+    "name": "QUALCOMM Incorporated",
+    "market": "stock"
+  },
+  {
+    "symbol": "INTC",
+    "name": "Intel Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "CSCO",
+    "name": "Cisco Systems, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "AMAT",
+    "name": "Applied Materials, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "LRCX",
+    "name": "Lam Research Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "MU",
+    "name": "Micron Technology, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "KLAC",
+    "name": "KLA Corporation ",
+    "market": "stock"
+  },
+  {
+    "symbol": "ASML",
+    "name": "ASML Holding N.V.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ADI",
+    "name": "Analog Devices, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "TXN",
+    "name": "Texas Instruments Incorporated",
+    "market": "stock"
+  },
+  {
+    "symbol": "ADP",
+    "name": "Automatic Data Processing, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "INTU",
+    "name": "Intuit Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ISRG",
+    "name": "Intuitive Surgical, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "REGN",
+    "name": "Regeneron Pharmaceuticals, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "VRTX",
+    "name": "Vertex Pharmaceuticals Incorporated",
+    "market": "stock"
+  },
+  {
+    "symbol": "AMGN",
+    "name": "Amgen Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "GILD",
+    "name": "Gilead Sciences, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "BIIB",
+    "name": "Biogen Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "SBUX",
+    "name": "Starbucks Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "BKNG",
+    "name": "Booking Holdings Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MAR",
+    "name": "Marriott International",
+    "market": "stock"
+  },
+  {
+    "symbol": "ABNB",
+    "name": "Airbnb, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "PYPL",
+    "name": "PayPal Holdings, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MELI",
+    "name": "MercadoLibre, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "CRWD",
+    "name": "CrowdStrike Holdings, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "PANW",
+    "name": "Palo Alto Networks, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "FTNT",
+    "name": "Fortinet, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ZS",
+    "name": "Zscaler, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DDOG",
+    "name": "Datadog, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "NET",
+    "name": "Cloudflare, Inc. Class A Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SNOW",
+    "name": "Snowflake Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PLTR",
+    "name": "Palantir Technologies Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "COIN",
+    "name": "Coinbase Global, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MSTR",
+    "name": "Strategy Inc",
+    "market": "stock"
+  },
+  {
+    "symbol": "HOOD",
+    "name": "Robinhood Markets, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "SOFI",
+    "name": "SoFi Technologies, Inc. ",
+    "market": "stock"
+  },
+  {
+    "symbol": "UBER",
+    "name": "Uber Technologies, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LYFT",
+    "name": "Lyft, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DASH",
+    "name": "DoorDash, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DUOL",
+    "name": "Duolingo, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "RBLX",
+    "name": "Roblox Corporation Class A Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TTWO",
+    "name": "Take-Two Interactive Software, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ROKU",
+    "name": "Roku, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "SPOT",
+    "name": "Spotify Technology S.A. Ordinary Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "SHOP",
+    "name": "Shopify Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "TEAM",
+    "name": "Atlassian Corporation ",
+    "market": "stock"
+  },
+  {
+    "symbol": "WDAY",
+    "name": "Workday, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MDB",
+    "name": "MongoDB, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "OKTA",
+    "name": "Okta, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DOCU",
+    "name": "DocuSign, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ZM",
+    "name": "Zoom Communications, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "HUBS",
+    "name": "HubSpot, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TTD",
+    "name": "The Trade Desk, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "RDDT",
+    "name": "Reddit, Inc. Class A Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SMCI",
+    "name": "Super Micro Computer, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DELL",
+    "name": "Dell Technologies Inc. Class C Common Stock ",
+    "market": "stock"
+  },
+  {
+    "symbol": "HPE",
+    "name": "Hewlett Packard Enterprise Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HPQ",
+    "name": "HP Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "IBM",
+    "name": "International Business Machines Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ORCL",
+    "name": "Oracle Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CRM",
+    "name": "Salesforce, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "NOW",
+    "name": "ServiceNow, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ACN",
+    "name": "Accenture plc Class A Ordinary Shares (Ireland)",
+    "market": "stock"
+  },
+  {
+    "symbol": "SAP",
+    "name": "SAP  SE ADS",
+    "market": "stock"
+  },
+  {
+    "symbol": "ANET",
+    "name": "Arista Networks, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DLR",
+    "name": "Digital Realty Trust, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "EQIX",
+    "name": "Equinix, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "WMT",
+    "name": "Walmart Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "TGT",
+    "name": "Target Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HD",
+    "name": "Home Depot, Inc. (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LOW",
+    "name": "Lowe's Companies, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TJX",
+    "name": "TJX Companies, Inc. (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ROST",
+    "name": "Ross Stores, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DG",
+    "name": "Dollar General Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DLTR",
+    "name": "Dollar Tree, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "NKE",
+    "name": "Nike, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LULU",
+    "name": "lululemon athletica inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DECK",
+    "name": "Deckers Outdoor Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CROX",
+    "name": "Crocs, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ONON",
+    "name": "On Holding AG Class A Ordinary Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "PG",
+    "name": "Procter & Gamble Company (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "KO",
+    "name": "Coca-Cola Company (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PEP",
+    "name": "PepsiCo, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MDLZ",
+    "name": "Mondelez International, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "KHC",
+    "name": "The Kraft Heinz Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "GIS",
+    "name": "General Mills, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CL",
+    "name": "Colgate-Palmolive Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SJM",
+    "name": "The J.M. Smucker Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HSY",
+    "name": "The Hershey Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MNST",
+    "name": "Monster Beverage Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "CELH",
+    "name": "Celsius Holdings, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "PM",
+    "name": "Philip Morris International Inc Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MO",
+    "name": "Altria Group, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "BTI",
+    "name": "British American Tobacco  Industries, p.l.c. Common Stock ADR",
+    "market": "stock"
+  },
+  {
+    "symbol": "STZ",
+    "name": "Constellation Brands, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DEO",
+    "name": "Diageo plc Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BUD",
+    "name": "Anheuser-Busch Inbev SA Sponsored ADR (Belgium)",
+    "market": "stock"
+  },
+  {
+    "symbol": "JPM",
+    "name": "JP Morgan Chase & Co. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BAC",
+    "name": "Bank of America Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "WFC",
+    "name": "Wells Fargo & Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "C",
+    "name": "Citigroup, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "GS",
+    "name": "Goldman Sachs Group, Inc. (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MS",
+    "name": "Morgan Stanley Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SCHW",
+    "name": "Charles Schwab Corporation (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BLK",
+    "name": "BlackRock, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BX",
+    "name": "Blackstone Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "KKR",
+    "name": "KKR & Co. Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "APO",
+    "name": "Apollo Global Management, Inc. (New) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AXP",
+    "name": "American Express Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "V",
+    "name": "Visa Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MA",
+    "name": "Mastercard Incorporated Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "COF",
+    "name": "Capital One Financial Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SYF",
+    "name": "Synchrony Financial Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ALL",
+    "name": "Allstate Corporation (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TRV",
+    "name": "The Travelers Companies, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PGR",
+    "name": "Progressive Corporation (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CB",
+    "name": "Chubb Limited  Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AIG",
+    "name": "American International Group, Inc. New Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MET",
+    "name": "MetLife, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PRU",
+    "name": "Prudential Financial, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AFL",
+    "name": "AFLAC Incorporated Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AMT",
+    "name": "American Tower Corporation (REIT) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CCI",
+    "name": "Crown Castle Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "O",
+    "name": "Realty Income Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PSA",
+    "name": "Public Storage Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SPG",
+    "name": "Simon Property Group, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "VICI",
+    "name": "VICI Properties Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "WELL",
+    "name": "Welltower Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "UNH",
+    "name": "UnitedHealth Group Incorporated Common Stock (DE)",
+    "market": "stock"
+  },
+  {
+    "symbol": "JNJ",
+    "name": "Johnson & Johnson Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LLY",
+    "name": "Eli Lilly and Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ABBV",
+    "name": "AbbVie Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MRK",
+    "name": "Merck & Company, Inc. Common Stock (new)",
+    "market": "stock"
+  },
+  {
+    "symbol": "PFE",
+    "name": "Pfizer, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BMY",
+    "name": "Bristol-Myers Squibb Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TMO",
+    "name": "Thermo Fisher Scientific Inc Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ABT",
+    "name": "Abbott Laboratories Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DHR",
+    "name": "Danaher Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MDT",
+    "name": "Medtronic plc. Ordinary Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "SYK",
+    "name": "Stryker Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BSX",
+    "name": "Boston Scientific Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "EW",
+    "name": "Edwards Lifesciences Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "GEHC",
+    "name": "GE HealthCare Technologies Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "HCA",
+    "name": "HCA Healthcare, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CVS",
+    "name": "CVS Health Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CI",
+    "name": "The Cigna Group Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HUM",
+    "name": "Humana Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ELV",
+    "name": "Elevance Health, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MCK",
+    "name": "McKesson Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "COR",
+    "name": "Cencora, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CAH",
+    "name": "Cardinal Health, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "VEEV",
+    "name": "Veeva Systems Inc. Class A Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DXCM",
+    "name": "DexCom, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "IDXX",
+    "name": "IDEXX Laboratories, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "IQV",
+    "name": "IQVIA Holdings, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BDX",
+    "name": "Becton, Dickinson and Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ZTS",
+    "name": "Zoetis Inc. Class A Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "XOM",
+    "name": "ExxonMobil Holdings Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CVX",
+    "name": "Chevron Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "COP",
+    "name": "ConocoPhillips Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "EOG",
+    "name": "EOG Resources, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SLB",
+    "name": "SLB Limited Common Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "HAL",
+    "name": "Halliburton Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "OXY",
+    "name": "Occidental Petroleum Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "VLO",
+    "name": "Valero Energy Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "MPC",
+    "name": "Marathon Petroleum Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PSX",
+    "name": "Phillips 66 Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "FANG",
+    "name": "Diamondback Energy, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "DVN",
+    "name": "Devon Energy Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "KMI",
+    "name": "Kinder Morgan, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "WMB",
+    "name": "Williams Companies, Inc. (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "OKE",
+    "name": "ONEOK, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LNG",
+    "name": "Cheniere Energy, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "NEE",
+    "name": "NextEra Energy, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DUK",
+    "name": "Duke Energy Corporation (Holding Company) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SO",
+    "name": "Southern Company (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AEP",
+    "name": "American Electric Power Company, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "EXC",
+    "name": "Exelon Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "XEL",
+    "name": "Xcel Energy Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ED",
+    "name": "Consolidated Edison, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "SRE",
+    "name": "DBA Sempra Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "D",
+    "name": "Dominion Energy, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "AEE",
+    "name": "Ameren Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ETR",
+    "name": "Entergy Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ES",
+    "name": "Eversource Energy (D/B/A) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PCG",
+    "name": "Pacific Gas & Electric Co. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "VST",
+    "name": "Vistra Corp. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CEG",
+    "name": "Constellation Energy Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "GE",
+    "name": "GE Aerospace Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "RTX",
+    "name": "RTX Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LMT",
+    "name": "Lockheed Martin Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "NOC",
+    "name": "Northrop Grumman Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "GD",
+    "name": "General Dynamics Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "BA",
+    "name": "Boeing Company (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "LHX",
+    "name": "L3Harris Technologies, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HII",
+    "name": "Huntington Ingalls Industries, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "TDG",
+    "name": "Transdigm Group Incorporated Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HEI",
+    "name": "Heico Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CAT",
+    "name": "Caterpillar, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DE",
+    "name": "Deere & Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CMI",
+    "name": "Cummins Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PCAR",
+    "name": "PACCAR Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "ETN",
+    "name": "Eaton Corporation, PLC Ordinary Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "PH",
+    "name": "Parker-Hannifin Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "HON",
+    "name": "Honeywell International Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "MMM",
+    "name": "3M Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "EMR",
+    "name": "Emerson Electric Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ITW",
+    "name": "Illinois Tool Works Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "ROK",
+    "name": "Rockwell Automation, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DOV",
+    "name": "Dover Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "IR",
+    "name": "Ingersoll Rand Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "OTIS",
+    "name": "Otis Worldwide Corporation Common Stock ",
+    "market": "stock"
+  },
+  {
+    "symbol": "CARR",
+    "name": "Carrier Global Corporation Common Stock ",
+    "market": "stock"
+  },
+  {
+    "symbol": "TT",
+    "name": "Trane Technologies plc",
+    "market": "stock"
+  },
+  {
+    "symbol": "JCI",
+    "name": "Johnson Controls International plc Ordinary Share",
+    "market": "stock"
+  },
+  {
+    "symbol": "WM",
+    "name": "Waste Management, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "RSG",
+    "name": "Republic Services, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "URI",
+    "name": "United Rentals, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "PWR",
+    "name": "Quanta Services, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "FAST",
+    "name": "Fastenal Company",
+    "market": "stock"
+  },
+  {
+    "symbol": "GWW",
+    "name": "W.W. Grainger, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "UNP",
+    "name": "Union Pacific Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CSX",
+    "name": "CSX Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "NSC",
+    "name": "Norfolk Southern Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CNI",
+    "name": "Canadian National Railway Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CP",
+    "name": "Canadian Pacific Kansas City Limited Common Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "UPS",
+    "name": "United Parcel Service, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "FDX",
+    "name": "FedEx Corporation Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "DAL",
+    "name": "Delta Air Lines, Inc. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "UAL",
+    "name": "United Airlines Holdings, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "AAL",
+    "name": "American Airlines Group, Inc.",
+    "market": "stock"
+  },
+  {
+    "symbol": "LUV",
+    "name": "Southwest Airlines Company Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "RCL",
+    "name": "Royal Caribbean Cruises Ltd. Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CCL",
+    "name": "Carnival Corporation Ltd. Common Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "NCLH",
+    "name": "Norwegian Cruise Line Holdings Ltd. Ordinary Shares",
+    "market": "stock"
+  },
+  {
+    "symbol": "DIS",
+    "name": "Walt Disney Company (The) Common Stock",
+    "market": "stock"
+  },
+  {
+    "symbol": "CMCSA",
+    "name": "Comcast Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "FOXA",
+    "name": "Fox Corporation",
+    "market": "stock"
+  },
+  {
+    "symbol": "BTC/USD",
+    "name": "Bitcoin",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ETH/USD",
+    "name": "Ethereum",
+    "market": "crypto"
+  },
+  {
+    "symbol": "SOL/USD",
+    "name": "Solana",
+    "market": "crypto"
+  },
+  {
+    "symbol": "XRP/USD",
+    "name": "XRP",
+    "market": "crypto"
+  },
+  {
+    "symbol": "LTC/USD",
+    "name": "Litecoin",
+    "market": "crypto"
+  },
+  {
+    "symbol": "BCH/USD",
+    "name": "Bitcoin Cash",
+    "market": "crypto"
+  },
+  {
+    "symbol": "LINK/USD",
+    "name": "Chainlink",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ADA/USD",
+    "name": "Cardano",
+    "market": "crypto"
+  },
+  {
+    "symbol": "DOGE/USD",
+    "name": "Dogecoin",
+    "market": "crypto"
+  },
+  {
+    "symbol": "AVAX/USD",
+    "name": "Avalanche",
+    "market": "crypto"
+  },
+  {
+    "symbol": "DOT/USD",
+    "name": "Polkadot",
+    "market": "crypto"
+  },
+  {
+    "symbol": "UNI/USD",
+    "name": "Uniswap",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ATOM/USD",
+    "name": "Cosmos",
+    "market": "crypto"
+  },
+  {
+    "symbol": "XLM/USD",
+    "name": "Stellar",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ALGO/USD",
+    "name": "Algorand",
+    "market": "crypto"
+  },
+  {
+    "symbol": "NEAR/USD",
+    "name": "NEAR Protocol",
+    "market": "crypto"
+  },
+  {
+    "symbol": "AAVE/USD",
+    "name": "Aave",
+    "market": "crypto"
+  },
+  {
+    "symbol": "SHIB/USD",
+    "name": "Shiba Inu",
+    "market": "crypto"
+  },
+  {
+    "symbol": "COMP/USD",
+    "name": "Compound",
+    "market": "crypto"
+  },
+  {
+    "symbol": "SNX/USD",
+    "name": "Synthetix",
+    "market": "crypto"
+  },
+  {
+    "symbol": "CRV/USD",
+    "name": "Curve DAO",
+    "market": "crypto"
+  },
+  {
+    "symbol": "BAT/USD",
+    "name": "Basic Attention Token",
+    "market": "crypto"
+  },
+  {
+    "symbol": "CHZ/USD",
+    "name": "Chiliz",
+    "market": "crypto"
+  },
+  {
+    "symbol": "GRT/USD",
+    "name": "The Graph",
+    "market": "crypto"
+  },
+  {
+    "symbol": "MANA/USD",
+    "name": "Decentraland",
+    "market": "crypto"
+  },
+  {
+    "symbol": "SAND/USD",
+    "name": "The Sandbox",
+    "market": "crypto"
+  },
+  {
+    "symbol": "APE/USD",
+    "name": "ApeCoin",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ARB/USD",
+    "name": "Arbitrum",
+    "market": "crypto"
+  },
+  {
+    "symbol": "OP/USD",
+    "name": "Optimism",
+    "market": "crypto"
+  },
+  {
+    "symbol": "INJ/USD",
+    "name": "Injective Protocol",
+    "market": "crypto"
+  },
+  {
+    "symbol": "FET/USD",
+    "name": "Artificial Superintelligence Alliance",
+    "market": "crypto"
+  },
+  {
+    "symbol": "IMX/USD",
+    "name": "Immutable X",
+    "market": "crypto"
+  },
+  {
+    "symbol": "LDO/USD",
+    "name": "Lido DAO",
+    "market": "crypto"
+  },
+  {
+    "symbol": "RENDER/USD",
+    "name": "Render",
+    "market": "crypto"
+  },
+  {
+    "symbol": "WIF/USD",
+    "name": "dogwifhat",
+    "market": "crypto"
+  },
+  {
+    "symbol": "PEPE/USD",
+    "name": "Pepe",
+    "market": "crypto"
+  },
+  {
+    "symbol": "HBAR/USD",
+    "name": "Hedera",
+    "market": "crypto"
+  },
+  {
+    "symbol": "TRX/USD",
+    "name": "TRON",
+    "market": "crypto"
+  },
+  {
+    "symbol": "XTZ/USD",
+    "name": "Tezos",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ICP/USD",
+    "name": "Internet Computer",
+    "market": "crypto"
+  },
+  {
+    "symbol": "USDC/USD",
+    "name": "USDC",
+    "market": "crypto"
+  },
+  {
+    "symbol": "USDT/USD",
+    "name": "Tether",
+    "market": "crypto"
+  },
+  {
+    "symbol": "TON/USD",
+    "name": "Gram (prev. Toncoin)",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ETC/USD",
+    "name": "Ethereum Classic",
+    "market": "crypto"
+  },
+  {
+    "symbol": "AERO/USD",
+    "name": "Aerodrome Finance",
+    "market": "crypto"
+  },
+  {
+    "symbol": "APT/USD",
+    "name": "Aptos",
+    "market": "crypto"
+  },
+  {
+    "symbol": "ASTER/USD",
+    "name": "Aster",
+    "market": "crypto"
+  },
+  {
+    "symbol": "AVNT/USD",
+    "name": "Avantis",
+    "market": "crypto"
+  },
+  {
+    "symbol": "AXS/USD",
+    "name": "Axie Infinity",
+    "market": "crypto"
+  },
+  {
+    "symbol": "BILL/USD",
+    "name": "Billions Network",
+    "market": "crypto"
+  }
+]

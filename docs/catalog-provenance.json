@@ -1,0 +1,11 @@
+{
+  "retrieved": "2026-10-18",
+  "stocks": 250,
+  "crypto": 50,
+  "sources": [
+    "https://www.nasdaqtrader.com/dynamic/SymDir/nasdaqlisted.txt",
+    "https://www.nasdaqtrader.com/dynamic/SymDir/otherlisted.txt",
+    "https://www.bitstamp.net/api/v2/markets/"
+  ],
+  "policy": "Distinct primary ticker listings; exclude test issues, funds, warrants, preferred securities, acquisition units and fiat bases. Active USD spot crypto pairs only."
+}
