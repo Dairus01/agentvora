@@ -35,3 +35,12 @@ Final database audit: 300 unique assets, seven genuine validation runs, 55 saved
 Rolling 60-second token reservations now cover both tiers and parallel councils. Empty model reports fail without emitting a completion event. Daily allowance errors have a clear public message without exposing provider details. These paths are covered by the 41-test backend suite. A completed live decision/risk-gate roundtrip still requires quota and a new bounded validation run.
 
 Credential failover verification: 49 backend tests pass (one opt-in live council test skipped). Mock HTTP tests cover primary success, authentication failure, rate limits, server failure, body-preserving backup replay, no fallback on invalid requests, and no credential attachment to other hosts. Both replacement credentials authenticated with HTTP 200 via model listing; no additional live council/model generation was performed.
+
+
+## Intraday and landing update verification (2026-10-18)
+
+Backend: 55 passed, one skipped. Frontend unit checks: seven passed. Production Docker build passed. All 15 browser checks passed. Browser coverage includes interval switching, five chart styles, a candle socket update that preserves the chart element, 300 unique symbols, responsive layouts and Markdown report structure.
+
+Actual running Docker API returned BTC/USD 1m and 15m history (300 Bitstamp bars each), and AAPL 1m history (500 yfinance bars, market closed). A bounded actual socket observation received three Bitcoin candle events with two distinct prices, Bitstamp polling/streaming sources and nonempty indicator payloads. This is a live market-data check, not a mocked stream test. No model generation was invoked for this work; scheduling remains paused.
+
+Batched desktop (1920px) and mobile (390px) screenshots showed no page overflow. The mobile chart label scale was adjusted to the container dimensions. The TradingView dependency and public chart attribution were removed in favor of an original SVG renderer; upstream framework and font license notices remain in the source distribution.
