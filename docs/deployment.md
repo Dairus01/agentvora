@@ -23,7 +23,7 @@ Open `http://localhost:3000`. Backend is bound to loopback port 8000; nginx prox
 5. Open the terminal settings button and enter the operator token to enable authorized manual analysis calls. It is held only in memory. Automated runs use the server's configured key and schedule without this browser token.
 6. Verify `/api/health`, market candles for AAPL and BTC, an event socket connection, and one inexpensive analysis. Confirm a completed decision before enabling a larger autonomous watchlist.
 
-Agent defaults: native `groq` provider, both tiers `openai/gpt-oss-20b`, one debate round, one risk round, two workers, 2048 output tokens. Start with `AUTONOMOUS_ENABLED=false` for deployment validation; set true after verifying. Leave `BOOTSTRAP_ANALYSIS=false`. Missing credentials leave the research desks in configuration-required state while market and paper portfolio views remain available.
+Agent defaults: native `groq` provider, both tiers `openai/gpt-oss-20b`, one debate round, one risk round, two workers, 2048 output tokens, low reasoning effort, and a shared 7000-token/minute budget. Set `TRADINGAGENTS_TOKENS_PER_MINUTE` below the provider account limit (the verified key reports 8000); higher budgets require an account that supports them. Start with `AUTONOMOUS_ENABLED=false` for deployment validation; set true after verifying. Leave `BOOTSTRAP_ANALYSIS=false`. Missing credentials leave the research desks in configuration-required state while market and paper portfolio views remain available.
 
 ## Strategy B: one server, Compose and reverse proxy
 
@@ -41,3 +41,5 @@ Portfolio limits: `PAPER_STARTING_CASH=100000`, `MAX_POSITION_WEIGHT=.20`, `MAX_
 ## Operations
 
 Monitor failed runs, provider data freshness, quote timestamps, disk/database growth and worker completion latency. No model error text or credentials are sent to the browser. Important events, reports and usage are persistent; ticks are transient. Long-term retention and distributed operation are not implemented. Quote failures reject execution; do not loosen freshness limits to disguise an outage or closed market.
+
+For an account limited to 200,000 model tokens/day, reduce the scheduled asset count and frequency before enabling autonomous research. A multi-role council can consume tens of thousands of tokens per run. The local setup intentionally leaves scheduling paused after quota-limited validation. Rolling minute reservations do not increase a provider daily allowance. The active local Docker database is the named volume; the imported host SQLite file is retained separately as a backup.
