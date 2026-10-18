@@ -225,7 +225,9 @@ async def candles(symbol, interval: str = "1d"):
 
         if interval not in INTERVALS:
             raise HTTPException(422, "Choose 1m, 5m, 15m, 30m, 1h, 4h or 1d")
-        return await charts.history(normalized, interval)
+        return await asyncio.wait_for(charts.history(normalized, interval), timeout=25)
+    except asyncio.TimeoutError:
+        raise HTTPException(504, "Candle provider timed out. Retry the chart or choose another asset.")
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
 
@@ -237,8 +239,10 @@ async def quote(symbol):
         market.active_assets[normalized] = time.monotonic()
         from .live_charts import freshness
 
-        result = await market.quote(normalized)
+        result = await asyncio.wait_for(market.quote(normalized), timeout=18)
         return {**result, **freshness(result)}
+    except asyncio.TimeoutError:
+        raise HTTPException(504, "Quote provider timed out. Please retry.")
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
 
