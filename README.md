@@ -59,7 +59,7 @@ The SQLite/PostgreSQL ledger persists reports, runs, events, decisions, orders, 
 
 ## Autonomy and cost
 
-`AUTONOMOUS_ENABLED=true` schedules research every 30 minutes, with two concurrent workers and persisted per-asset cooldowns. Configure `AUTONOMOUS_ASSETS` to reduce scope. No full analysis runs on price ticks. Startup analysis is disabled; enabling `BOOTSTRAP_ANALYSIS` queues at most two assets. A cycle allows at most three paper fills. Disable scheduled research with `AUTONOMOUS_ENABLED=false`; manual analysis still works when configured.
+`AUTONOMOUS_ENABLED=true` schedules research every 30 minutes, with two concurrent workers and persisted per-asset cooldowns. Fresh deployments default to `AUTONOMOUS_ENABLED=false` so an unverified environment cannot consume model quota automatically. Configure `AUTONOMOUS_ASSETS` to reduce scope. No full analysis runs on price ticks. Startup analysis is disabled; enabling `BOOTSTRAP_ANALYSIS` queues at most two assets. A cycle allows at most three paper fills. Enable scheduled research only after validating one bounded manual run and confirming the account allowance. Manual analysis still works when configured while scheduling is disabled.
 
 One API process/replica is required. A sleeping backend cannot provide continuous autonomy. A failed or interrupted analysis never creates a trade from partial reports.
 
