@@ -8,12 +8,13 @@ const candles = Array.from({ length: 100 }, (_, i) => ({
   volume: 1000,
 }));
 test.beforeEach(async ({ page }) => {
-  await page.route("**/api/market/**/candles", async (route) =>
+  await page.route("**/api/market/**/candles*", async (route) =>
     route.fulfill({
       json: {
         symbol: decodeURIComponent(
           route.request().url().split("/market/")[1].split("/candles")[0],
         ),
+        interval: new URL(route.request().url()).searchParams.get("interval") || "1d",
         market: "stock",
         price: 201,
         change: 1,
@@ -114,7 +115,7 @@ test("decision detail renders explicit records", async ({ page }) => {
         execution: "filled",
         execution_reason: null,
         sources: [],
-        market_view: "Verified price structure",
+        market_view: "**Verified price structure**\n\n- First evidence\n- Second evidence\n\n| Metric | Value |\n| --- | --- |\n| RSI | 60 |",
         fundamental_view: "Financial evidence",
         news_view: "News unavailable",
         sentiment_view: "Social data unavailable",
@@ -131,9 +132,18 @@ test("decision detail renders explicit records", async ({ page }) => {
   await expect(
     page.getByText("Verified price structure", { exact: true }),
   ).toBeVisible();
+  await expect(page.locator(".report-markdown strong", { hasText: "Verified price structure" })).toBeVisible();
+  await expect(page.locator(".report-markdown li", { hasText: "First evidence" })).toBeVisible();
+  await expect(page.locator(".report-markdown table")).toBeVisible();
   await expect(
     page.getByText("Modest paper allocation", { exact: true }),
   ).toBeVisible();
+});
+
+test("landing respects reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await expect(page.locator(".ticker-track")).toHaveCSS("animation-name", "none");
 });
 
 test("event socket connects to the actual backend", async ({ page }) => {
@@ -156,4 +166,30 @@ test('300 unique assets are searchable without eagerly loading 300 charts',async
   await page.getByRole('textbox',{name:'Search watchlist'}).fill('XRP');
   await page.getByRole('button',{name:/XRP/}).click();
   await expect(page.getByRole('heading',{name:'XRP',exact:true})).toBeVisible();
+});
+
+test("intraday intervals, chart styles and unbranded live candle updates", async ({ page }) => {
+  let socket: import("@playwright/test").WebSocketRoute | undefined;
+  await page.routeWebSocket("**/ws", ws => { socket = ws; });
+  await page.goto("/terminal");
+  const chart = page.getByTestId("chart");
+  await expect(chart).toHaveAttribute("data-interval", "1m");
+  await page.getByRole("button", { name: "15m", exact: true }).click();
+  await expect(chart).toHaveAttribute("data-interval", "15m");
+  await page.getByRole("button", { name: "1h", exact: true }).click();
+  await expect(chart).toHaveAttribute("data-interval", "1h");
+  const select = page.getByRole("combobox", { name: "Chart style" });
+  for (const style of ["heikin", "bars", "line", "area", "candles"]) {
+    await select.selectOption(style);
+    await expect(chart).toHaveAttribute("data-style", style);
+  }
+  await page.getByRole("button", { name: "1m", exact: true }).click();
+  await expect(chart).toHaveAttribute("data-interval", "1m");
+  const svg = await chart.locator("svg").elementHandle();
+  socket!.send(JSON.stringify({ id: "test-candle", type: "market.candle", asset: "BTC/USD", interval: "1m", candle: { ...candles.at(-1), close: 222, high: 223 }, price: 222, timestamp: new Date().toISOString(), market_timestamp: new Date().toISOString(), source: "bitstamp-stream" }));
+  await expect(chart).toHaveAttribute("data-last-close", "222");
+  expect(await svg!.evaluate(node => node.isConnected)).toBe(true);
+  await expect(page.locator('a[href*="tradingview"]')).toHaveCount(0);
+  await page.goto("/source");
+  await expect(page.locator('a[href*="tradingview"]')).toHaveCount(0);
 });
