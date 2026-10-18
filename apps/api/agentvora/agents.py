@@ -154,6 +154,7 @@ def model_config():
 class Intelligence:
     async def analyze(self, run_id, symbol, snapshot, fundamentals, news, portfolio):
         loop = asyncio.get_running_loop()
+        http_clients = []
 
         def publish(kind, agent, **data):
             asyncio.run_coroutine_threadsafe(
@@ -215,11 +216,24 @@ class Intelligence:
                 "GROQ_API_KEY", settings.groq_api_key.get_secret_value()
             )
             cfg = model_config()
+            transport = {}
+            if cfg["llm_provider"] == "groq":
+                import httpx
+                from .provider_auth import GroqKeyFailover
+
+                transport["http_client"] = httpx.Client(
+                    auth=GroqKeyFailover(
+                        settings.groq_api_key.get_secret_value(),
+                        settings.groq_backup_api_key.get_secret_value(),
+                    ),
+                    timeout=90,
+                )
+                http_clients.append(transport["http_client"])
             quick = create_tier_client(
-                cfg, "quick", callbacks=[Meter()], timeout=90
+                cfg, "quick", callbacks=[Meter()], timeout=90, **transport
             ).get_llm()
             deep = create_tier_client(
-                cfg, "deep", callbacks=[Meter()], timeout=90
+                cfg, "deep", callbacks=[Meter()], timeout=90, **transport
             ).get_llm()
             for model in (quick, deep):
                 if cfg["llm_provider"] == "groq" and getattr(
@@ -492,7 +506,11 @@ class Intelligence:
                 )
             return final, parsed.model_dump()
 
-        return await asyncio.to_thread(execute_graph)
+        try:
+            return await asyncio.to_thread(execute_graph)
+        finally:
+            for client in http_clients:
+                client.close()
 
 
 intelligence = Intelligence()
