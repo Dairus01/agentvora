@@ -1,0 +1,121 @@
+export type Asset = {
+  symbol: string;
+  name: string;
+  market: "stock" | "crypto";
+};
+export type Candle = {
+  time: number;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+};
+export type Point = { time: number; value: number };
+export type Snapshot = {
+  symbol: string;
+  market: string;
+  price: number;
+  change: number;
+  timestamp: string;
+  market_timestamp: string;
+  source: string;
+  stale: boolean;
+  candles: Candle[];
+  indicators: {
+    latest: Record<string, number | string | null>;
+    series: Record<string, Point[]>;
+  };
+};
+export type DeskEvent = {
+  id: string;
+  run_id?: string;
+  type: string;
+  asset?: string;
+  desk?: string;
+  agent?: string;
+  status?: string;
+  headline?: string;
+  summary?: string;
+  timestamp: string;
+  confidence?: number;
+  price?: number;
+  market_timestamp?: string;
+};
+export type Decision = {
+  id: string;
+  run_id: string;
+  symbol: string;
+  market: string;
+  timestamp: string;
+  action: "BUY" | "SELL" | "HOLD";
+  confidence: number;
+  summary: string;
+  requested_allocation: number;
+  approved_allocation: number;
+  reference_price: number;
+  risk_flags: string[];
+  execution: string;
+  execution_reason: string | null;
+  sources: { url: string; title: string }[];
+  market_view: string;
+  fundamental_view: string;
+  news_view: string;
+  sentiment_view: string;
+  bull_case: string;
+  bear_case: string;
+  research_conclusion: string;
+  risk_conclusion: string;
+  portfolio_conclusion: string;
+};
+export type Position = {
+  id: string;
+  symbol: string;
+  quantity: number;
+  average_entry: number;
+  current_price: number;
+  market_value: number;
+  unrealized_pnl: number;
+  return_pct: number;
+  confidence: number;
+  last_reassessment: string;
+};
+export type Portfolio = {
+  cash: number;
+  equity: number;
+  invested: number;
+  realized_pnl: number;
+  unrealized_pnl: number;
+  total_return: number;
+  today_return: number;
+  positions: Position[];
+};
+export type Trade = {
+  id: string;
+  symbol: string;
+  action: string;
+  quantity: number;
+  price: number;
+  fee: number;
+  timestamp: string;
+  realized_pnl: number;
+  decision_id: string;
+  confidence: number;
+};
+export type Run = {
+  id: string;
+  symbol: string;
+  status: string;
+  timestamp: string;
+  reports?: { agent: string; desk: string; report: string }[];
+};
+export type Status = {
+  agent_network: string;
+  autonomous: boolean;
+  autonomous_status: string;
+  execution: string;
+  queue_depth: number;
+  interval_minutes: number;
+  source_available: boolean;
+  source_repository_url: string | null;
+};
