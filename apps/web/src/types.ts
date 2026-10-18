@@ -13,6 +13,11 @@ export type Candle = {
 };
 export type Point = { time: number; value: number };
 export type Snapshot = {
+  interval?: string;
+  market_status?: string;
+  quote_source?: string;
+  quote_age_seconds?: number;
+  live_update?: boolean;
   symbol: string;
   market: string;
   price: number;
@@ -28,6 +33,13 @@ export type Snapshot = {
   };
 };
 export type DeskEvent = {
+  interval?: string;
+  candle?: Candle;
+  indicators?: Snapshot["indicators"];
+  source?: string;
+  stale?: boolean;
+  market_status?: string;
+  change?: number;
   id: string;
   run_id?: string;
   type: string;
