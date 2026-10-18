@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.jpg -text
+*.png -text
+*.ico -text
+vendor/TradingAgents/** -text
