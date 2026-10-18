@@ -160,6 +160,7 @@ test('300 unique assets are searchable without eagerly loading 300 charts',async
   expect(new Set(symbols).size).toBe(300);
   await page.waitForTimeout(500);
   expect(requested.size).toBeLessThan(30);
+  expect([...requested].some(url => url.includes("interval=1d"))).toBe(false);
   await page.getByRole('textbox',{name:'Search watchlist'}).fill('ADBE');
   await page.getByRole('button',{name:/ADBE.*Adobe/}).click();
   await expect(page.getByRole('heading',{name:'ADBE',exact:true})).toBeVisible();
@@ -192,4 +193,11 @@ test("intraday intervals, chart styles and unbranded live candle updates", async
   await expect(page.locator('a[href*="tradingview"]')).toHaveCount(0);
   await page.goto("/source");
   await expect(page.locator('a[href*="tradingview"]')).toHaveCount(0);
+});
+
+test("provider failures show an error instead of indefinite connecting", async ({ page }) => {
+  await page.route("**/api/market/**/candles*", route => route.fulfill({ status: 504, json: { detail: "Candle provider timed out. Retry the chart or choose another asset." } }));
+  await page.goto("/terminal?symbol=LTC%2FUSD");
+  await expect(page.getByRole("heading", { name: "Market data unavailable" })).toBeVisible();
+  await expect(page.getByText("Candle provider timed out. Retry the chart or choose another asset.")).toBeVisible();
 });
