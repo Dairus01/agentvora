@@ -15,6 +15,7 @@ ROOT = Path(
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ROOT / ".env", extra="ignore")
     groq_api_key: SecretStr = SecretStr("")
+    groq_backup_api_key: SecretStr = SecretStr("")
     database_url: str = "sqlite:///./data/agentvora.db"
     autonomous_enabled: bool = True
     autonomous_interval_minutes: int = Field(30, ge=1)
