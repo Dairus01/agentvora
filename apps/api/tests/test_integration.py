@@ -5,8 +5,6 @@ from pydantic import SecretStr
 from agentvora.db import Base, AgentRun, AgentEvent, AgentReport, Decision, Fill, now
 
 
-
-
 def test_api(isolated):
     from agentvora.main import app
 
@@ -178,6 +176,39 @@ async def test_full_upstream_council_and_execution(isolated, monkeypatch, candle
         assert portfolio(db)["cash"] < 100000
     with pytest.raises(ValueError, match="cooldown"):
         await orch.enqueue("AAPL")
+
+
+async def test_empty_report_never_emits_completion_or_creates_trade(
+    isolated, monkeypatch
+):
+    import tradingagents.llm_clients as clients
+    from langchain_core.messages import AIMessage
+    from agentvora.agents import intelligence
+    from agentvora.config import settings
+
+    monkeypatch.setattr(clients, "create_tier_client", lambda *a, **kw: FakeModel())
+    monkeypatch.setattr(FakeModel, "invoke", lambda *a: AIMessage(content=""))
+    monkeypatch.setattr(settings, "groq_api_key", SecretStr("test-key"))
+    with isolated.begin() as db:
+        run = AgentRun(symbol="AAPL", status="running")
+        db.add(run)
+        db.flush()
+        run_id = run.id
+    snapshot = {
+        "timestamp": now(),
+        "market": "stock",
+        "price": 100,
+        "indicators": {"latest": {}},
+        "candles": [],
+    }
+    with pytest.raises(ValueError, match="no explicit report"):
+        await intelligence.analyze(run_id, "AAPL", snapshot, {}, [], {"cash": 100000})
+    with isolated() as db:
+        types = [event.payload["type"] for event in db.scalars(select(AgentEvent))]
+        assert "agent.error" in types
+        assert "agent.completed" not in types
+        assert db.scalar(select(Decision)) is None
+        assert db.scalar(select(Fill)) is None
 
 
 @pytest.mark.skipif(
