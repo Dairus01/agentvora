@@ -217,11 +217,15 @@ def asset(symbol):
 
 # Symbols containing a slash are carried in the path using the path converter.
 @app.get("/api/market/{symbol:path}/candles")
-async def candles(symbol):
+async def candles(symbol, interval: str = "1d"):
     try:
         normalized = symbol_or_error(symbol)
         market.active_assets[normalized] = time.monotonic()
-        return await market.snapshot(normalized)
+        from .live_charts import charts, INTERVALS
+
+        if interval not in INTERVALS:
+            raise HTTPException(422, "Choose 1m, 5m, 15m, 30m, 1h, 4h or 1d")
+        return await charts.history(normalized, interval)
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
 
@@ -231,7 +235,10 @@ async def quote(symbol):
     try:
         normalized = symbol_or_error(symbol)
         market.active_assets[normalized] = time.monotonic()
-        return await market.quote(normalized)
+        from .live_charts import freshness
+
+        result = await market.quote(normalized)
+        return {**result, **freshness(result)}
     except RuntimeError as exc:
         raise HTTPException(503, str(exc))
 
