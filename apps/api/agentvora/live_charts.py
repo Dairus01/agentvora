@@ -136,6 +136,7 @@ def technicals(rows, symbol, interval):
 
 class LiveCharts:
     def __init__(self):
+        self.fetch_limit = asyncio.Semaphore(4)
         self.cache = {}
         self.locks = {}
         self.touched = {}
@@ -155,7 +156,7 @@ class LiveCharts:
             if cached and time.monotonic() - cached[0] < 25:
                 return cached[1]
             try:
-                async with market.fetch_limit if interval != "1d" else AsyncExitStack():
+                async with self.fetch_limit if interval != "1d" else AsyncExitStack():
                     if interval == "1d":
                         original = await market.snapshot(symbol)
                         rows = [dict(c) for c in original["candles"]]
