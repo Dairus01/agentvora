@@ -2,7 +2,7 @@
 
 ## Local production-style Compose
 
-Requires Docker Engine/Desktop with Linux containers and Compose v2. This development machine has neither Docker nor a functioning WSL installation, so image execution could not be verified here. The CI workflow includes an actual image build on Ubuntu.
+Requires Docker Engine/Desktop with Linux containers and Compose v2. The development environment was repaired and verified with Docker Desktop, WSL 3.0.3 and Docker Engine 29.5.2; both application images built successfully and both containers passed health checks. CI also builds the images on Ubuntu.
 
 ```powershell
 Copy-Item .env.example .env  # only if .env does not already exist
