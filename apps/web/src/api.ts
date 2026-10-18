@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import type { DeskEvent } from "./types";
+import type { DeskEvent, Snapshot } from "./types";
+import { mergeCandle } from "./live";
 export const API_ORIGIN = (import.meta.env.VITE_API_ORIGIN || "").replace(
   /\/$/,
   "",
@@ -78,13 +79,23 @@ export function useEvents() {
         try {
           const event: DeskEvent = JSON.parse(e.data);
           if (event.type === "heartbeat") return;
+          if (event.type === "market.candle") {
+            for (const [key, snapshot] of client.getQueriesData<Snapshot>({ queryKey: ["market"] })) {
+              if (snapshot && snapshot.symbol === event.asset) client.setQueryData(key, mergeCandle(snapshot, event));
+            }
+            return;
+          }
+          if (event.type === "market.status") {
+            client.setQueriesData({ queryKey: ["quote", "/market/" + encodeURIComponent(event.asset || "") + "/quote"] }, (old: object | undefined) => old ? { ...old, stale: true, market_status: "unavailable" } : old);
+            return;
+          }
           if (event.type === "market.tick") {
             client.setQueryData(
               [
                 "quote",
                 "/market/" + encodeURIComponent(event.asset || "") + "/quote",
               ],
-              event,
+              (old: object | undefined) => ({ ...old, ...event, timestamp: event.market_timestamp, symbol: event.asset }),
             );
             window.dispatchEvent(
               new CustomEvent("agentvora:tick", { detail: event }),
