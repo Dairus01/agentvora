@@ -201,10 +201,38 @@ class MarketData:
     async def quote(self, symbol):
         symbol = normalize(symbol)
         cached = self.quote_cache.get(symbol)
-        if cached and time.monotonic() - cached[0] < 15:
-            return cached[1]
+        if (
+            cached
+            and time.monotonic() - cached[0] < 5
+            and "previous_close" in cached[1]
+        ):
+            from .live_charts import freshness
+
+            return {**cached[1], **freshness(cached[1])}
         async with httpx.AsyncClient(timeout=15) as c:
             if "/" in symbol:
+                try:
+                    r = await c.get(
+                        f"https://www.bitstamp.net/api/v2/ticker/{symbol.replace('/', '').lower()}/"
+                    )
+                    r.raise_for_status()
+                    j = r.json()
+                    price, reference = float(j["last"]), float(j["open"])
+                    result = {
+                        "symbol": symbol,
+                        "price": price,
+                        "previous_close": reference,
+                        "change": (price / reference - 1) * 100 if reference else 0,
+                        "timestamp": datetime.fromtimestamp(
+                            int(j["timestamp"]), timezone.utc
+                        ).isoformat(),
+                        "source": "bitstamp-poll",
+                        "stale": False,
+                    }
+                    self.quote_cache[symbol] = (time.monotonic(), result)
+                    return result
+                except Exception:
+                    pass
                 try:
                     r = await c.get(
                         f"https://api.exchange.coinbase.com/products/{symbol.replace('/', '-')}/ticker"
@@ -293,7 +321,16 @@ class MarketData:
                         ).isoformat(),
                         "source": "yahoo-chart",
                         "stale": False,
+                        "previous_close": float(
+                            m.get("chartPreviousClose") or m["regularMarketPrice"]
+                        ),
                     }
+                    result["change"] = (
+                        result["price"] / result["previous_close"] - 1
+                    ) * 100
+                    from .live_charts import freshness
+
+                    result.update(freshness(result))
                     self.quote_cache[symbol] = (time.monotonic(), result)
                     return result
                 except Exception:
