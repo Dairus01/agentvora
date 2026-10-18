@@ -44,3 +44,6 @@ Backend: 55 passed, one skipped. Frontend unit checks: seven passed. Production 
 Actual running Docker API returned BTC/USD 1m and 15m history (300 Bitstamp bars each), and AAPL 1m history (500 yfinance bars, market closed). A bounded actual socket observation received three Bitcoin candle events with two distinct prices, Bitstamp polling/streaming sources and nonempty indicator payloads. This is a live market-data check, not a mocked stream test. No model generation was invoked for this work; scheduling remains paused.
 
 Batched desktop (1920px) and mobile (390px) screenshots showed no page overflow. The mobile chart label scale was adjusted to the container dimensions. The TradingView dependency and public chart attribution were removed in favor of an original SVG renderer; upstream framework and font license notices remain in the source distribution.
+
+
+Loading-state correction: watchlist rows fetch quotes without candle histories. Intraday history uses a separate concurrency queue. Regression coverage blocks the daily-history queue while intraday succeeds, verifies explicit provider-timeout responses, and checks that the terminal renders a failure instead of indefinite connecting. After deployment, actual LTC/USD 1m history returned HTTP 200 with 300 Bitstamp bars in 5.34 seconds.
