@@ -1,3 +1,4 @@
+import Report from "./Report";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -360,7 +361,7 @@ export function DecisionsPage() {
                       </span>
                     </td>
                     <td>{num(d.confidence * 100)}%</td>
-                    <td className="summary-cell">{d.summary}</td>
+                    <td className="summary-cell"><Report text={d.summary} compact /></td>
                     <td>{d.execution}</td>
                     <td>
                       <Link
@@ -424,8 +425,9 @@ export function DecisionPage() {
       <PageTitle
         label={"PAPER · " + date(d.timestamp)}
         title={d.symbol + " / " + d.action}
-        description={d.summary}
+        description="Explicit research conclusion and deterministic execution record."
       />
+      <Report text={d.summary} />
       <div className="metrics-grid">
         <Metric
           label="ADVISORY CONFIDENCE"
@@ -451,7 +453,7 @@ export function DecisionPage() {
         {sections.map(([title, report]) => (
           <section className="panel" key={title}>
             <div className="panel-title">{title.toUpperCase()}</div>
-            <p className="report-text">{report || "No report supplied."}</p>
+            <Report text={report || "No report supplied."} />
           </section>
         ))}
       </div>
@@ -561,7 +563,7 @@ export function CouncilPage({
         <section className="panel council-report">
           <div className="panel-title">{selected.toUpperCase()}</div>
           {report ? (
-            <p className="report-text">{report}</p>
+            <Report text={report || ""} />
           ) : (
             <Empty title="Awaiting an executed report">
               Select an agent to inspect its explicit report. Start research
@@ -652,14 +654,7 @@ export function SourcePage({ status }: { status?: Status }) {
           live-money execution path.
         </p>
       </section>
-      <a
-        className="text-link"
-        href="https://www.tradingview.com/"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Charts by TradingView
-      </a>
+
     </main>
   );
 }
