@@ -25,7 +25,7 @@ import {
 export default function Workspace() {
   const { data: status, error } = useApi<Status>("status", "/system/status");
   const { events, connected } = useEvents();
-  const [selected, setSelected] = useState("MSFT");
+  const [selected, setSelected] = useState(new URLSearchParams(location.search).get("symbol") || "BTC/USD");
   const [nav, setNav] = useState(false);
   const [settingsOpen, setSettings] = useState(false);
   const [operatorToken, setToken] = useState("");
