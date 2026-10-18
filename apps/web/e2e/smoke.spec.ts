@@ -62,7 +62,7 @@ test("landing and terminal navigation", async ({ page }) => {
   ).toBeVisible();
   await page.getByRole("button", { name: /Research Council/ }).click();
   await expect(
-    page.getByText("Bull Researcher", { exact: true }),
+    page.getByTestId("agent-panel").getByText("Bull Researcher", { exact: true }).first(),
   ).toBeVisible();
 });
 for (const [route, heading] of [
