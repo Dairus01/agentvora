@@ -6,8 +6,8 @@ export const API_ORIGIN = (import.meta.env.VITE_API_ORIGIN || "").replace(
   /\/$/,
   "",
 );
-export async function get<T>(url: string): Promise<T> {
-  const r = await fetch(API_ORIGIN + "/api" + url);
+export async function get<T>(url: string, signal?: AbortSignal): Promise<T> {
+  const r = await fetch(API_ORIGIN + "/api" + url, { signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(30000)]) : AbortSignal.timeout(30000) });
   if (!r.ok) {
     const j = await r.json().catch(() => ({}));
     throw new Error(j.detail || "Service temporarily unavailable");
@@ -35,7 +35,7 @@ export function useApi<T>(
   return useQuery<T>({
     enabled,
     queryKey: [key, url],
-    queryFn: () => get<T>(url),
+    queryFn: ({ signal }) => get<T>(url, signal),
     refetchInterval: interval,
     retry: 1,
     staleTime: 15000,
