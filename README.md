@@ -30,7 +30,7 @@ Without a key, charts and the initialized $100,000 paper portfolio work; researc
 | Route | Purpose |
 |---|---|
 | `/` | Recording-derived landing page with actual market snapshots |
-| `/terminal` | Stocks/crypto watchlist, daily candles, volume, EMA/VWAP/Bollinger toggles, indicators, paper markers and six live desks |
+| `/terminal` | 300 unique stocks/crypto assets, 1m through 1d candles, five chart styles, volume, EMA/VWAP/Bollinger toggles, indicators, paper markers and six live desks |
 | `/council` | Twelve-role research graph with actual node statuses and selectable reports |
 | `/portfolio` | Cash, NAV, cost basis, realized/unrealized P&L, equity curve, allocation, positions and fills |
 | `/decisions` | Searchable decision archive, including HOLD and rejected orders |
