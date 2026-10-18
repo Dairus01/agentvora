@@ -90,7 +90,11 @@ async def test_requested_interval_uses_exchange_step_and_separate_cache(monkeypa
 
     monkeypatch.setattr(market, "quote", quote)
     service = LiveCharts()
-    minute = await service.history("BTC/USD", "1m")
+    import asyncio
+
+    # A saturated background daily-history queue must not delay the selected chart.
+    monkeypatch.setattr(market, "fetch_limit", asyncio.Semaphore(0))
+    minute = await asyncio.wait_for(service.history("BTC/USD", "1m"), 2)
     fifteen = await service.history("BTC/USD", "15m")
     assert requests == [60, 900]
     assert minute["candles"][-1]["time"] - minute["candles"][-2]["time"] == 60
@@ -132,3 +136,21 @@ async def test_interval_api_rejects_invalid_values_without_substitution(isolated
             client.get("/api/market/BTC%2FUSD/candles?interval=2seconds").status_code
             == 422
         )
+
+async def test_provider_timeouts_are_explicit_api_errors(isolated, monkeypatch):
+    from fastapi.testclient import TestClient
+    from agentvora.main import app
+    from agentvora.live_charts import charts
+    from agentvora.market import market
+
+    async def timeout(*args, **kwargs):
+        raise TimeoutError("upstream deadline")
+
+    monkeypatch.setattr(charts, "history", timeout)
+    monkeypatch.setattr(market, "quote", timeout)
+    with TestClient(app) as client:
+        candle = client.get("/api/market/LTC%2FUSD/candles?interval=1m")
+        quote = client.get("/api/market/LTC%2FUSD/quote")
+    assert candle.status_code == quote.status_code == 504
+    assert "timed out" in candle.json()["detail"]
+    assert "timed out" in quote.json()["detail"]
