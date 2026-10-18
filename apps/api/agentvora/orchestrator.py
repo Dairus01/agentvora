@@ -12,6 +12,22 @@ from .broker import portfolio, execute
 log = logging.getLogger(__name__)
 
 
+def public_failure(exc):
+    if getattr(exc, "status_code", None) == 429:
+        body = getattr(exc, "body", {})
+        detail = body.get("error", body) if isinstance(body, dict) else {}
+        daily = (
+            isinstance(detail, dict)
+            and "tokens per day" in str(detail.get("message", "")).lower()
+        )
+        return (
+            "Research service daily allowance reached. Retry after the allowance replenishes. No trade was executed."
+            if daily
+            else "Research service capacity limit reached. Retry later. No trade was executed."
+        )
+    return "Analysis could not complete. Check server diagnostics and data availability. No trade was executed."
+
+
 class Orchestrator:
     def __init__(self):
         self.queue = asyncio.Queue(maxsize=100)
@@ -232,20 +248,29 @@ class Orchestrator:
                 headline="Council analysis complete",
             )
         except Exception as exc:
-            log.warning("Run %s failed (%s)", run_id, type(exc).__name__)
+            # Status/code identify provider failures without logging prompts or keys.
+            log.warning(
+                "Run %s failed (%s; status=%s; code=%s)",
+                run_id,
+                type(exc).__name__,
+                getattr(exc, "status_code", None),
+                getattr(exc, "code", None),
+            )
             with Session.begin() as db:
                 run = db.get(AgentRun, run_id)
                 run.status = "error"
                 run.payload = {
                     **run.payload,
-                    "error": "Analysis could not complete. Check server diagnostics and data availability. No trade was executed.",
+                    "error": public_failure(exc),
                 }
             await bus.emit(
                 "agent.error",
                 run_id,
                 asset=symbol,
                 status="error",
-                headline="Analysis unavailable; no trade executed",
+                headline="Research service capacity limit reached; no trade executed"
+                if getattr(exc, "status_code", None) == 429
+                else "Analysis unavailable; no trade executed",
             )
         finally:
             with Session.begin() as db:
