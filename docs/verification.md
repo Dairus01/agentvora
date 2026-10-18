@@ -2,7 +2,7 @@
 
 | Check | Result |
 |---|---|
-| Backend tests | 41 passed, paid live-key integration opt-in skipped in the normal suite |
+| Backend tests | 49 passed, paid live-key integration opt-in skipped in the normal suite |
 | Frontend unit tests | Five passed |
 | Frontend TypeScript and production build | Passed |
 | Playwright | 13 passed against the running Docker services, including 300-symbol uniqueness, ADBE/XRP search and lazy loading |
@@ -33,3 +33,5 @@ Live-run audit: initial AAPL (provider request failure), BTC/USD (ambiguous unst
 Final database audit: 300 unique assets, seven genuine validation runs, 55 saved explicit reports, zero orders and zero fills. Local history was backed up using SQLite backup and imported into the previously unused Docker volume; integrity check passed. Original recording hash still matches. The supplied key remains in ignored `.env`; source/archive checks exclude it.
 
 Rolling 60-second token reservations now cover both tiers and parallel councils. Empty model reports fail without emitting a completion event. Daily allowance errors have a clear public message without exposing provider details. These paths are covered by the 41-test backend suite. A completed live decision/risk-gate roundtrip still requires quota and a new bounded validation run.
+
+Credential failover verification: 49 backend tests pass (one opt-in live council test skipped). Mock HTTP tests cover primary success, authentication failure, rate limits, server failure, body-preserving backup replay, no fallback on invalid requests, and no credential attachment to other hosts. Both replacement credentials authenticated with HTTP 200 via model listing; no additional live council/model generation was performed.
