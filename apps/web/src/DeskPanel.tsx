@@ -1,3 +1,4 @@
+import Report from "./Report";
 import { Activity, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import type { DeskEvent, Status, Run } from "./types";
@@ -115,10 +116,7 @@ export default function DeskPanel({
                     return (
                       <div key={a}>
                         <Label>{a}</Label>
-                        <p className="report-text">
-                          {report ||
-                            "Awaiting an executed analysis. Reports appear here as each agent completes."}
-                        </p>
+                        <Report text={report || "Awaiting an executed analysis. Reports appear here as each agent completes."} />
                       </div>
                     );
                   })}
@@ -154,7 +152,7 @@ export default function DeskPanel({
                   {e.type === "debate.argument" ? "COUNCIL" : "REPORT"}
                 </span>
               </div>
-              <p className="report-text">{e.summary}</p>
+              <Report text={e.summary || ""} compact />
               <small className="mono muted">
                 {date(e.timestamp)}
                 {e.confidence != null
