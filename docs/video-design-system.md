@@ -20,7 +20,7 @@ Closest open typefaces: DM Sans for UI/headings and IBM Plex Mono for financial 
 
 Cards use 12–18 px radii on landing; terminal panels 6–8 px; tiny badges 4–5 px. One-pixel borders dominate; avoid heavy shadows except subtle depth on rotated hero market cards. Hero green radial wash is derived from the recording; no background video. SVG heartbeat identity reflects the original icon language while rebranding. Lucide gives consistent small line icons.
 
-Chart: dark plot, faint grid, emerald up/coral down candles, matching wicks, muted volume histogram at bottom, emerald/blue EMA overlays, mono axes, small crosshair labels and right price line. Tables extend the same rhythm with mono headers and financial cells, horizontal scroll on narrow widths. Current implementation uses daily market history and explicitly labels it.
+Chart: dark plot, faint grid, emerald up/coral down candles, matching wicks, muted volume histogram at bottom, emerald/blue EMA overlays, mono axes, small crosshair labels and right price line. Tables extend the same rhythm with mono headers and financial cells, horizontal scroll on narrow widths. The interval toolbar selects real market history from 1m through 1d; chart styles include derived Heikin Ashi, labeled as such.
 
 Navigation: compact 70–78 px header, green active-route wash, left-aligned brand. Source recording has a large search field; Agentvora uses useful route links and watchlist search instead of a nonfunctional global search. Asset rail retains company labels, right-aligned quote/change and green selected border. Intelligence rail uses outlined role cards, small uppercase statuses and report cards. User can expand each of six desks into the original underlying roles.
 
