@@ -52,7 +52,7 @@ Docker Desktop is installed. The missing WSL MSI registration was repaired with 
 
 ## TEST STATUS
 
-Backend: 41 tests passed; opt-in paid integration is skipped in the normal suite. Frontend: five unit tests passed. Typecheck and production build passed. Browser validation includes the 300-symbol uniqueness/search/lazy-loading check; final results are recorded in `docs/verification.md`. Python wheel build passed and includes `catalog.json`. Source ZIP build/download passed; secrets, databases, videos and dependencies are excluded. Both Docker images build; API and web containers are healthy, and all 13 browser checks pass against Docker.
+Backend: 49 tests passed; opt-in paid integration is skipped in the normal suite. Frontend: five unit tests passed. Typecheck and production build passed. Browser validation includes the 300-symbol uniqueness/search/lazy-loading check; final results are recorded in `docs/verification.md`. Python wheel build passed and includes `catalog.json`. Source ZIP build/download passed; secrets, databases, videos and dependencies are excluded. Both Docker images build; API and web containers are healthy, and all 13 browser checks pass against Docker.
 
 ## DEPLOYMENT
 
@@ -76,3 +76,5 @@ Shortest route: an always-on Linux server, Docker Compose and TLS reverse proxy.
 ## ACTIVE LOCAL RUNTIME
 
 Docker Compose serves http://localhost:3000 with the supplied server-side key. The active database is in `agentvora_agentvora-data`; existing local history was imported with an integrity check. `data/agentvora.db` remains a separate backup/source for local development, not a live mirror of later Docker writes. Seven validation runs and 55 genuine reports are retained. Research scheduling is paused because of the account daily allowance. After sufficient allowance replenishes, choose a schedule/asset count within that allowance before enabling it. The default six-asset, 30-minute schedule needs substantially more than a 200,000-token daily allowance.
+
+Credential update: the owner supplied a replacement primary and separate backup key on 2026-10-18. Both authenticated via the non-generative model-list endpoint. Both are stored only in ignored `.env`; automatic server-side failover is implemented. Scheduling remains paused, and no new council run was started for this credential update. Prior quota measurements refer to the earlier credential/account state.
