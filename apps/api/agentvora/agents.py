@@ -3,7 +3,8 @@ Upstream research, trader, risk and portfolio factories are used unmodified.
 No message token stream or private reasoning metadata is published.
 """
 
-import asyncio, json, os, re, time
+import asyncio, json, os, re, time, threading
+from collections import deque
 from pydantic import BaseModel, Field
 from .config import settings, ROOT
 from .db import Session, Usage, AgentReport
@@ -33,12 +34,92 @@ REPORT_KEYS = {
     "Portfolio Manager": "final_trade_decision",
 }
 
+# Shared across both model tiers and concurrent councils in this API process.
+_quota_lock = threading.Lock()
+_model_reservations = deque()
+
+
+def reserve_model_request(tokens):
+    budget = settings.tradingagents_tokens_per_minute
+    if tokens > budget:
+        raise ValueError("Research context exceeds the configured model token budget")
+    with _quota_lock:
+        now = time.monotonic()
+        while _model_reservations and _model_reservations[0][0] + 60.05 <= now:
+            _model_reservations.popleft()
+        start = max(now, _model_reservations[-1][0] if _model_reservations else now)
+        while True:
+            active = [
+                (when, cost)
+                for when, cost in _model_reservations
+                if when + 60.05 > start
+            ]
+            if sum(cost for _, cost in active) + tokens <= budget:
+                break
+            start = active[0][0] + 60.05
+        _model_reservations.append((start, tokens))
+    return max(0, start - time.monotonic())
+
+
+def model_request_tokens(messages, params):
+    import tiktoken
+
+    encoder = tiktoken.get_encoding("o200k_base")
+    text = "\n".join(str(m.content) for group in messages for m in group)
+    schema = json.dumps(
+        params.get("tools", params.get("response_format", {})),
+        default=lambda value: (
+            value.model_json_schema()
+            if isinstance(value, type) and issubclass(value, BaseModel)
+            else str(value)
+        ),
+    )
+    return (
+        int(len(encoder.encode(text + schema)) * 1.15)
+        + settings.tradingagents_max_tokens
+        + 100
+    )
+
 
 def clean_report(value):
     text = str(value or "")
     text = re.sub(r"<think>.*?(?:</think>|$)", "", text, flags=re.S | re.I)
     text = re.sub(r"<analysis>.*?(?:</analysis>|$)", "", text, flags=re.S | re.I)
     return text.strip()[:14000]
+
+
+def bounded_context(state):
+    """Bound duplicated upstream debate context without altering stored reports."""
+
+    def excerpt(value, limit):
+        if not isinstance(value, str) or len(value) <= limit:
+            return value
+        return value[:limit] + "\n[Excerpt; full report retained in research history.]"
+
+    result = dict(state)
+    for key in REPORT_KEYS.values():
+        if key in result:
+            result[key] = excerpt(result[key], 1200)
+    for key in ("investment_debate_state", "risk_debate_state"):
+        if key in result:
+            original = result[key]
+            result[key] = {
+                field: excerpt(value, 1500 if field == "history" else 600)
+                for field, value in original.items()
+            }
+            # Preserve each participant instead of cutting the debate after its
+            # first speaker. Upstream prompts otherwise duplicate this history.
+            speakers = (
+                ("bull_history", "bear_history")
+                if key == "investment_debate_state"
+                else ("aggressive_history", "conservative_history", "neutral_history")
+            )
+            arguments = [excerpt(original.get(field, ""), 450) for field in speakers]
+            if any(arguments):
+                result[key]["history"] = "\n".join(
+                    value for value in arguments if value
+                )
+    return result
 
 
 class NormalizedDecision(BaseModel):
@@ -108,6 +189,13 @@ class Intelligence:
             )
 
             class Meter(BaseCallbackHandler):
+                raise_error = True
+
+                def on_chat_model_start(self, serialized, messages, **kwargs):
+                    params = kwargs.get("invocation_params", {})
+                    tokens = model_request_tokens(messages, params)
+                    time.sleep(reserve_model_request(tokens))
+
                 def on_llm_end(self, response, **kwargs):
                     usage = (response.llm_output or {}).get("token_usage", {})
                     with Session.begin() as db:
@@ -127,8 +215,20 @@ class Intelligence:
                 "GROQ_API_KEY", settings.groq_api_key.get_secret_value()
             )
             cfg = model_config()
-            quick = create_tier_client(cfg, "quick", callbacks=[Meter()]).get_llm()
-            deep = create_tier_client(cfg, "deep", callbacks=[Meter()]).get_llm()
+            quick = create_tier_client(
+                cfg, "quick", callbacks=[Meter()], timeout=90
+            ).get_llm()
+            deep = create_tier_client(
+                cfg, "deep", callbacks=[Meter()], timeout=90
+            ).get_llm()
+            for model in (quick, deep):
+                if cfg["llm_provider"] == "groq" and getattr(
+                    model, "model_name", ""
+                ) in (
+                    "openai/gpt-oss-20b",
+                    "openai/gpt-oss-120b",
+                ):
+                    model.reasoning_effort = settings.tradingagents_reasoning_effort
             context = {
                 "symbol": symbol,
                 "market": snapshot["market"],
@@ -140,7 +240,7 @@ class Intelligence:
                 "news": news,
                 "social_data": "Unavailable: do not infer public social sentiment from price alone",
             }
-            evidence = json.dumps(context, ensure_ascii=False)[:18000]
+            evidence = json.dumps(context, ensure_ascii=False)[:10000]
 
             def analyst(name, focus):
                 def node(state):
@@ -180,7 +280,7 @@ class Intelligence:
                         )
                     start = time.monotonic()
                     try:
-                        result = node(state)
+                        result = node(bounded_context(state))
                         if name in REPORT_KEYS:
                             report = result.get(REPORT_KEYS[name], "")
                         elif name in ("Bull Researcher", "Bear Researcher"):
@@ -197,6 +297,8 @@ class Intelligence:
                                 "",
                             )
                         report = clean_report(report)
+                        if not report:
+                            raise ValueError("Agent returned no explicit report")
                         if report:
                             with Session.begin() as db:
                                 db.add(
@@ -359,7 +461,12 @@ class Intelligence:
             final = graph.compile().invoke(state, {"recursion_limit": 100})
             # One bounded extraction call. Failure fails the run closed, never a guessed trade.
             result = deep.with_structured_output(
-                NormalizedDecision, method="function_calling"
+                NormalizedDecision,
+                method="json_schema"
+                if cfg["llm_provider"] == "groq"
+                and cfg["deep_think_llm"]
+                in ("openai/gpt-oss-20b", "openai/gpt-oss-120b")
+                else "function_calling",
             ).invoke(
                 [
                     SystemMessage(
