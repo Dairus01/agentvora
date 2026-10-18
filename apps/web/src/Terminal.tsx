@@ -14,6 +14,8 @@ import { money, num, pct } from "./format";
 import { Empty, Label } from "./ui";
 import Chart from "./Chart";
 import DeskPanel from "./DeskPanel";
+import { useLiveMarket, useQuoteState, type Quote } from "./useLiveMarket";
+import type { ChartStyle } from "./live";
 function WatchRow({
   asset,
   selected,
@@ -33,12 +35,7 @@ function WatchRow({
     if (rowRef.current) observer.observe(rowRef.current);
     return () => observer.disconnect();
   }, []);
-  const { data } = useApi<Snapshot>(
-    "market",
-    "/market/" + encodeURIComponent(asset.symbol) + "/candles",
-    60000,
-    inView || selected,
-  );
+  const { data, price, quote } = useLiveMarket(asset.symbol, "1d", inView || selected);
   return (
     <button
       ref={rowRef}
@@ -47,17 +44,17 @@ function WatchRow({
     >
       <div>
         <b>{asset.symbol.replace("/USD", "")}</b>
-        <span className="mono">{data ? num(data.price) : "\u2014"}</span>
+        <span className="mono live-number" key={price}>{num(price)}</span>
       </div>
       <div>
         <small>{asset.name}</small>
         <span
           className={
-            "mono " + (data && data.change < 0 ? "negative" : "positive")
+            "mono " + ((quote?.change ?? data?.change ?? 0) < 0 ? "negative" : "positive")
           }
         >
-          {data
-            ? pct(data.change)
+          {quote?.change != null || data
+            ? pct(quote?.change ?? data?.change)
             : inView || selected
               ? "Connecting"
               : asset.market === "stock"
@@ -87,6 +84,8 @@ export default function Terminal({
   const [selectedIndicators, setIndicators] = useState(["ema21", "ema50"]);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  const [interval, setInterval] = useState("1m");
+  const [chartStyle, setChartStyle] = useState<ChartStyle>("candles");
   const { data: assets = [] } = useApi<Asset[]>("assets", "/assets");
   const {
     data: snapshot,
@@ -95,16 +94,17 @@ export default function Terminal({
     refetch,
   } = useApi<Snapshot>(
     "market",
-    "/market/" + encodeURIComponent(selected) + "/candles",
-    60000,
+    "/market/" + encodeURIComponent(selected) + "/candles?interval=" + interval,
+    20000,
   );
   const { data: trades = [] } = useApi<Trade[]>("trades", "/trades");
   const { data: book } = useApi<Portfolio>("portfolio", "/portfolio");
-  const { data: quote } = useApi<{ price: number }>(
+  const { data: quote } = useApi<Quote>(
     "quote",
     "/market/" + encodeURIComponent(selected) + "/quote",
-    20000,
+    8000,
   );
+  const quoteState = useQuoteState(quote);
   const onTrade = useCallback(
     (id: string) => navigate("/decisions/" + id),
     [navigate],
@@ -209,7 +209,12 @@ export default function Terminal({
           </div>
         </div>
         <div className="chart-toolbar">
-          <span className="tag positive">1D CANDLES</span>
+          <div className="interval-controls" aria-label="Candle interval">
+            {["1m", "5m", "15m", "30m", "1h", "4h", "1d"].map(value => <button key={value} aria-pressed={interval === value} className={interval === value ? "active" : ""} onClick={() => setInterval(value)}>{value}</button>)}
+          </div>
+          <select aria-label="Chart style" value={chartStyle} onChange={e => setChartStyle(e.target.value as ChartStyle)}>
+            <option value="candles">Candles</option><option value="heikin">Heikin Ashi</option><option value="bars">OHLC bars</option><option value="line">Line</option><option value="area">Area</option>
+          </select>
           <div className="indicator-toggles">
             {[
               "ema9",
@@ -247,6 +252,7 @@ export default function Terminal({
               indicators={selectedIndicators}
               trades={trades}
               onTrade={onTrade}
+              style={chartStyle}
             />
           ) : (
             <Empty
@@ -261,18 +267,20 @@ export default function Terminal({
           )}
         </div>
         <div className="chart-meta mono">
-          <span className={snapshot?.stale ? "warning" : "muted"}>
+          <span className={snapshot?.stale || quoteState === "stale" ? "warning" : "muted"}>
+            <b className="feed-state">{quoteState.toUpperCase()}</b>{" · "}
             {snapshot
               ? (snapshot.stale ? "STALE · " : "") +
                 snapshot.source.toUpperCase()
               : "CONNECTING"}{" "}
             ·{" "}
             {snapshot
-              ? "AS OF " + new Date(snapshot.market_timestamp).toLocaleString()
+              ? "AS OF " + new Date(quote?.timestamp || snapshot.market_timestamp).toLocaleString()
               : "NO SYNTHETIC DATA"}
           </span>
-          <span>PAPER MARKERS · DAILY HISTORY</span>
+          <span>PAPER MARKERS · {interval.toUpperCase()} HISTORY{chartStyle === "heikin" ? " · DERIVED HEIKIN ASHI" : ""}</span>
         </div>
+        {quoteState === "market closed" && <div className="market-closure">US stock session is closed. Showing the last session; prices resume when trading opens. <button onClick={() => setSelected("BTC/USD")}>View live Bitcoin</button></div>}
         <div className="analytics-bar">
           {[
             ["RSI (14)", "rsi14"],
