@@ -10,7 +10,7 @@ COPY scripts scripts
 COPY docs docs
 COPY .github .github
 COPY apps/web apps/web
-COPY README.md LICENSE THIRD_PARTY_NOTICES.md CODEX_HANDOFF.md .env.example .gitignore .dockerignore docker-compose.yml ./
+COPY README.md LICENSE THIRD_PARTY_NOTICES.md CODEX_HANDOFF.md .env.example .gitignore .gitattributes .dockerignore docker-compose.yml ./
 RUN mkdir -p data && python scripts/build_source_package.py && useradd --create-home agentvora && chown -R agentvora:agentvora /app
 USER agentvora
 EXPOSE 8000
