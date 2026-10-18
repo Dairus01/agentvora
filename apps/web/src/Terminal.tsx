@@ -14,7 +14,7 @@ import { money, num, pct } from "./format";
 import { Empty, Label } from "./ui";
 import Chart from "./Chart";
 import DeskPanel from "./DeskPanel";
-import { useLiveMarket, useQuoteState, type Quote } from "./useLiveMarket";
+import { useQuoteState, type Quote } from "./useLiveMarket";
 import type { ChartStyle } from "./live";
 function WatchRow({
   asset,
@@ -35,7 +35,8 @@ function WatchRow({
     if (rowRef.current) observer.observe(rowRef.current);
     return () => observer.disconnect();
   }, []);
-  const { data, price, quote } = useLiveMarket(asset.symbol, "1d", inView || selected);
+  const { data: quote, error: quoteError } = useApi<Quote>("quote", "/market/" + encodeURIComponent(asset.symbol) + "/quote", 8000, inView || selected);
+  const price = quote?.price;
   return (
     <button
       ref={rowRef}
@@ -50,13 +51,15 @@ function WatchRow({
         <small>{asset.name}</small>
         <span
           className={
-            "mono " + ((quote?.change ?? data?.change ?? 0) < 0 ? "negative" : "positive")
+            "mono " + ((quote?.change ?? 0) < 0 ? "negative" : "positive")
           }
         >
-          {quote?.change != null || data
-            ? pct(quote?.change ?? data?.change)
-            : inView || selected
-              ? "Connecting"
+          {quote
+            ? pct(quote.change)
+            : quoteError
+              ? "Unavailable"
+              : inView || selected
+              ? "Loading quote"
               : asset.market === "stock"
                 ? "Stock"
                 : "Crypto"}
@@ -99,12 +102,13 @@ export default function Terminal({
   );
   const { data: trades = [] } = useApi<Trade[]>("trades", "/trades");
   const { data: book } = useApi<Portfolio>("portfolio", "/portfolio");
-  const { data: quote } = useApi<Quote>(
+  const { data: quote, error: quoteError } = useApi<Quote>(
     "quote",
     "/market/" + encodeURIComponent(selected) + "/quote",
     8000,
   );
   const quoteState = useQuoteState(quote);
+  const feedState = quote ? quoteState : quoteError ? "quote unavailable" : snapshot ? "history loaded" : error ? "unavailable" : "loading history";
   const onTrade = useCallback(
     (id: string) => navigate("/decisions/" + id),
     [navigate],
@@ -257,22 +261,22 @@ export default function Terminal({
           ) : (
             <Empty
               title={
-                error ? "Market data unavailable" : "Connecting to the market"
+                error ? "Market data unavailable" : "Loading candle history"
               }
             >
               {error
                 ? (error as Error).message
-                : "Requesting real historical candles from public market sources."}
+                : "Fetching " + interval + " candles for " + selected + ". Public feeds can take a few seconds."}
             </Empty>
           )}
         </div>
         <div className="chart-meta mono">
           <span className={snapshot?.stale || quoteState === "stale" ? "warning" : "muted"}>
-            <b className="feed-state">{quoteState.toUpperCase()}</b>{" · "}
+            <b className="feed-state">{feedState.toUpperCase()}</b>{" · "}
             {snapshot
               ? (snapshot.stale ? "STALE · " : "") +
                 snapshot.source.toUpperCase()
-              : "CONNECTING"}{" "}
+              : error ? "UNAVAILABLE" : "REQUESTING CANDLES"}{" "}
             ·{" "}
             {snapshot
               ? "AS OF " + new Date(quote?.timestamp || snapshot.market_timestamp).toLocaleString()
