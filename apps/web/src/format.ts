@@ -4,7 +4,7 @@ export function money(value: number | null | undefined) {
     : new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-        maximumFractionDigits: 2,
+        maximumFractionDigits: Math.abs(value) > 0 && Math.abs(value) < 1 ? 8 : 2,
       }).format(value);
 }
 export function num(value: number | null | undefined, digits = 2) {
