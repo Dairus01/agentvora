@@ -5,7 +5,84 @@ from agentvora.market import normalize, MarketData
 from agentvora.analytics import indicators
 from agentvora.broker import account, portfolio, execute
 from agentvora.db import AgentRun, Decision, Fill, PortfolioSnapshot, now
-from agentvora.agents import NormalizedDecision, clean_report
+from agentvora.agents import NormalizedDecision, clean_report, bounded_context
+
+
+def test_debate_context_is_bounded_without_mutating_saved_reports():
+    state = {
+        "market_report": "x" * 14000,
+        "risk_debate_state": {
+            "history": "y" * 14000,
+            "current_neutral_response": "z" * 9000,
+            "count": 3,
+            "latest_speaker": "Neutral",
+        },
+    }
+    bounded = bounded_context(state)
+    assert len(bounded["market_report"]) < 1900
+    assert len(bounded["risk_debate_state"]["history"]) < 1900
+    assert len(bounded["risk_debate_state"]["current_neutral_response"]) < 1100
+    assert bounded["risk_debate_state"]["count"] == 3
+    assert len(state["market_report"]) == 14000
+    assert len(state["risk_debate_state"]["history"]) == 14000
+
+    debate = {
+        "investment_debate_state": {
+            "history": "bull" * 4000 + "bear" * 4000,
+            "bull_history": "BULL CASE " + "x" * 9000,
+            "bear_history": "BEAR CASE " + "y" * 9000,
+        }
+    }
+    history = bounded_context(debate)["investment_debate_state"]["history"]
+    assert "BULL CASE" in history and "BEAR CASE" in history
+    assert len(history) < 1600
+
+
+def test_model_quota_is_shared_and_rejects_oversized_requests(monkeypatch):
+    from agentvora import agents
+
+    from collections import deque
+
+    monkeypatch.setattr(agents, "_model_reservations", deque())
+    monkeypatch.setattr(agents.settings, "tradingagents_tokens_per_minute", 7000)
+    monkeypatch.setattr(agents.time, "monotonic", lambda: 100)
+    assert agents.reserve_model_request(3500) == 0
+    assert agents.reserve_model_request(3500) == 0
+    assert agents.reserve_model_request(3500) == pytest.approx(60.05)
+    assert agents.reserve_model_request(3500) == pytest.approx(60.05)
+    with pytest.raises(ValueError, match="token budget"):
+        agents.reserve_model_request(7001)
+
+
+def test_native_models_prefer_schema_output():
+    from tradingagents.llm_clients.capabilities import get_capabilities
+
+    for model in ("openai/gpt-oss-20b", "openai/gpt-oss-120b"):
+        assert get_capabilities(model).preferred_structured_method == "json_schema"
+
+
+def test_quota_failure_is_clear_without_exposing_provider_details():
+    from agentvora.orchestrator import public_failure
+
+    error = RuntimeError("private-provider-key")
+    error.status_code = 429
+    error.body = {
+        "error": {"message": "tokens per day limit reached for private-provider-key"}
+    }
+    message = public_failure(error)
+    assert "daily allowance" in message
+    assert "private-provider-key" not in message
+    assert "No trade" in message
+
+
+def test_quota_meter_counts_native_pydantic_response_schema():
+    from langchain_core.messages import HumanMessage
+    from agentvora.agents import model_request_tokens
+
+    messages = [[HumanMessage(content="Hold; no evidence supplied.")]]
+    plain = model_request_tokens(messages, {})
+    structured = model_request_tokens(messages, {"response_format": NormalizedDecision})
+    assert plain < structured < 7000
 
 
 def decision(db, action="BUY", confidence=0.8, allocation=0.1):
