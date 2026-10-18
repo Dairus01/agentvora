@@ -2478,3 +2478,85 @@ tbody tr:hover {
     padding: 18px;
   }
 }
+
+/* Exchange-driven surfaces and readable research. */
+.live-ticker { padding: 13px 0; display: block; position: relative; }
+.ticker-track,.ticker-group { display: flex; align-items: center; width: max-content; }
+.ticker-track { animation: market-tape 55s linear infinite; }
+.ticker-group { gap: 42px; padding-right: 42px; }
+.ticker-item { display: flex; align-items: center; gap: 12px; font-size: 11px; }
+.ticker-item b { color: var(--text); }
+.ticker-item small { font-size: 8px; text-transform: uppercase; color: var(--muted); }
+.live-ticker:hover .ticker-track,.live-ticker:focus-within .ticker-track { animation-play-state: paused; }
+[data-motion="off"],[data-motion="off"] * { animation-play-state: paused !important; }
+@keyframes market-tape { to { transform: translateX(-50%); } }
+.market-card { cursor: pointer; transform-style: preserve-3d; animation: market-float 7s ease-in-out infinite; transition: border-color 180ms, box-shadow 180ms; }
+.market-card-0 { --angle: -3deg; }
+.market-card-1 { --angle: 4deg; animation-delay: -2s; }
+.market-card-2 { --angle: 3deg; animation-delay: -4s; }
+.market-card-3 { --angle: -3deg; animation-delay: -1s; }
+.market-card:hover,.market-card:focus-visible,.selected-market { border-color: #00d69b80; box-shadow: 0 22px 50px #00000030,0 0 30px #00d69b0d; outline-offset: 5px; }
+@keyframes market-float { 0%,100% { transform: perspective(800px) translateY(0) rotate(var(--angle)) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); } 50% { transform: perspective(800px) translateY(-12px) rotate(var(--angle)) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)); } }
+.live-number { font-variant-numeric: tabular-nums; animation: quote-arrival 600ms ease-out; }
+@keyframes quote-arrival { from { color: var(--accent); text-shadow: 0 0 12px #00d69b50; } to { text-shadow: none; } }
+.report-block { min-width: 0; max-width: 100%; }
+.report-markdown { white-space: normal; overflow-wrap: anywhere; line-height: 1.75; color: var(--text); font-size: 13px; }
+.report-markdown p { margin: 0 0 14px; line-height: 1.75; font-size: inherit; }
+.report-markdown p:last-child { margin-bottom: 0; }
+.report-markdown strong { font-weight: 700; color: var(--text); }
+.report-markdown h1,.report-markdown h2,.report-markdown h3,.report-markdown h4 { font-size: 14px; line-height: 1.5; letter-spacing: 0; margin: 22px 0 10px; font-weight: 700; }
+.report-markdown h1:first-child,.report-markdown h2:first-child,.report-markdown h3:first-child { margin-top: 0; }
+.report-markdown ol,.report-markdown ul { padding-left: 23px; margin: 12px 0 18px; }
+.report-markdown ol { list-style: decimal; }
+.report-markdown ul { list-style: disc; }
+.report-markdown li { padding-left: 3px; margin-bottom: 9px; }
+.report-markdown li p { margin: 0; }
+.report-markdown hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+.report-markdown blockquote { border-left: 1px solid var(--border); padding: 6px 15px; margin: 16px 0; color: var(--muted); }
+.report-markdown a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.report-table { max-width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; margin: 16px 0; }
+.report-table table { border-collapse: collapse; width: 100%; min-width: 380px; font-size: 11px; }
+.report-table th { text-align: left; background: var(--panel); color: var(--text); font-weight: 600; }
+.report-table td,.report-table th { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--border); white-space: normal; }
+.report-table tr:last-child td { border-bottom: 0; }
+.report-table td:not(:last-child),.report-table th:not(:last-child) { border-right: 1px solid var(--border); }
+.report-markdown pre { overflow-x: auto; padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; }
+.report-markdown code { font-family: 'IBM Plex Mono',monospace; font-size: .88em; }
+.report-collapsed .report-markdown { max-height: 240px; overflow: hidden; mask-image: linear-gradient(#000 75%,transparent); }
+.report-expand { margin-top: 12px; padding: 5px 0; color: var(--accent); font-size: 11px; cursor: pointer; }
+.panel > .report-block,.council-report > .report-block { padding: 22px; }
+.desk-agents .report-markdown { font-size: 11px; }
+.typing-report::after { content: '\258c'; display: inline; color: var(--accent); animation: research-cursor .8s steps(1) infinite; }
+@keyframes research-cursor { 50% { opacity: 0; } }
+.research-stages { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; padding: 18px; border-bottom: 1px solid var(--border); }
+.research-stages span { display: flex; justify-content: space-between; align-items: center; font: 8px 'IBM Plex Mono',monospace; text-transform: uppercase; color: var(--muted); }
+.research-stages i { width: 5px; height: 5px; border-radius: 50%; background: var(--border); }
+.research-stages .research-active { color: var(--accent); }
+.research-active i { background: var(--accent); animation: research-cursor 1s infinite; }
+.preview-report > small { display: block; margin: 8px 0 14px; font-size: 8px; }
+.monitor-report { min-height: 210px; background: linear-gradient(130deg,#00d69b08,transparent); }
+.research-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 20px; }
+.live-research { max-height: 820px; overflow-y: auto; }
+.live-signal .card-heading > div { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.live-signal strong { font: 22px 'IBM Plex Mono',monospace; }
+.live-signal .eyebrow { font-size: 8px; }
+.live-signal > .mono { font-size: 10px; }
+.bias-labels { display: flex; justify-content: space-between; margin-top: 28px; font-size: 9px; }
+.bias-track { display: flex; height: 5px; overflow: hidden; background: var(--border); border-radius: 2px; margin-top: 10px; }
+.bias-track i { height: 100%; background: #00bd8b;  }
+.bias-track i + i { background: #c85c70; }
+.analytics-live { min-width: 0; }
+.analytics-live-heading { display: flex; justify-content: space-between; font-size: 10px; padding: 16px 4px; color: var(--muted); }
+.analytics-live .analytics-preview { margin: 0 0 15px; }
+.analytics-live b { display: block; margin-top: 8px; color: var(--text); }
+.analytics-live > small { font-size: 9px; }
+.chart-toolbar { flex-wrap: wrap; gap: 10px; padding-block: 9px; }
+.interval-controls { display: flex; gap: 3px; flex-wrap: wrap; }
+.interval-controls button { padding: 7px 9px; color: var(--muted); border-radius: 5px; font: 10px 'IBM Plex Mono',monospace; }
+.interval-controls button.active { background: #00d69b20; color: var(--accent); }
+.chart-toolbar select { border: 1px solid var(--border); border-radius: 6px; padding: 6px; color: var(--text); background: var(--panel); font-size: 11px; max-width: 130px; }
+.feed-state { color: var(--accent); }
+.market-closure { font-size: 11px; color: var(--muted); padding: 12px 18px; border-top: 1px solid var(--border); line-height: 1.7; }
+.market-closure button { color: var(--accent); margin-left: 6px; text-decoration: underline; cursor: pointer; }
+@media(max-width:767px) { .ticker-group { gap: 25px; padding-right: 25px; } .ticker-item { font-size: 10px; gap: 8px; } .ticker-item small { display: none; } .interval-controls { width: 100%; } .chart-toolbar .indicator-toggles { flex-wrap: wrap; } .report-markdown { font-size: 12px; } .research-actions .text-link { font-size: 11px; } }
+@media(prefers-reduced-motion:reduce) { .ticker-track,.market-card,.typing-report::after,.research-active i { animation: none !important; } .ticker-track { transform: none; } .live-ticker { overflow-x: auto; } .market-card { transform: rotate(var(--angle)); } .live-number { animation: none; transition: color 150ms; } .bias-track i { transition: none; } }
