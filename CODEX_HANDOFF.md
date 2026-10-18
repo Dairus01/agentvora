@@ -24,7 +24,7 @@ Default quick model: `openai/gpt-oss-20b`.
 
 Default deep model: `openai/gpt-oss-20b`.
 
-Optional stronger manager model is disabled. No key was available for a live paid-agent test.
+Optional stronger manager model is disabled. The supplied key is configured in ignored `.env`, server-side only. Native strict-schema connectivity passed. Live validation exposed context/rate-limit issues; bounded excerpts, rolling token reservations and native JSON-schema selection have been added. Full council completion is still unverified because the account daily limit was reached. `AUTONOMOUS_ENABLED=false` intentionally preserves remaining allowance. See `docs/verification.md`.
 
 ## MARKET DATA
 
@@ -48,11 +48,11 @@ docker compose up --build -d
 docker compose ps
 ```
 
-Requires Docker Desktop/Engine with Linux containers. Local Docker execution is unverified because no Docker/Podman runtime is installed and WSL returns REGDB_E_CLASSNOTREG.
+Docker Desktop is installed. The missing WSL MSI registration was repaired with the signed Microsoft WSL 3.0.3 installer; engine 29.5.2 starts successfully. Application image/runtime results are recorded in `docs/verification.md`.
 
 ## TEST STATUS
 
-Backend: 35 tests passed, one live-key integration test skipped because no key is present. Frontend: five unit tests passed. Typecheck and production build passed. Browser validation includes the 300-symbol uniqueness/search/lazy-loading check; final results are recorded in `docs/verification.md`. Python wheel build passed and includes `catalog.json`. Source ZIP build/download passed; secrets, databases, videos and dependencies are excluded. Docker execution remains unverified for the reason below.
+Backend: 41 tests passed; opt-in paid integration is skipped in the normal suite. Frontend: five unit tests passed. Typecheck and production build passed. Browser validation includes the 300-symbol uniqueness/search/lazy-loading check; final results are recorded in `docs/verification.md`. Python wheel build passed and includes `catalog.json`. Source ZIP build/download passed; secrets, databases, videos and dependencies are excluded. Both Docker images build; API and web containers are healthy, and all 13 browser checks pass against Docker.
 
 ## DEPLOYMENT
 
@@ -60,15 +60,19 @@ Shortest route: an always-on Linux server, Docker Compose and TLS reverse proxy.
 
 ## KNOWN LIMITATIONS
 
-- Live provider execution was not verified without `GROQ_API_KEY`; full graph execution is covered with model-boundary mocks.
-- Docker images could not be built locally without a working container runtime. CI is configured to build them on Ubuntu.
+- Model service availability and quota depend on the account. The verified account limit is 8000 tokens/minute; application pacing defaults to 7000. Failed validation runs remain visible and never generated fills. The provider reported 197,534 / 200,000 daily tokens used; no further model calls were made after identifying that limit.
+- Docker Desktop and WSL now run locally. CI also builds images on Ubuntu.
 - Public data endpoints may be delayed, blocked or rate-limited. Candles are daily; quote freshness is enforced. Closed equity markets can legitimately reject execution.
 - Social sentiment and crypto supply metrics are explicitly unavailable. News fallback is an empty, declared context.
 - Single API process/replica required. Distributed scheduling, long-term retention automation and a backtest UI are not implemented.
 
 ## NEXT ACTION FOR OWNER
 
-1. Put `GROQ_API_KEY` into `.env`.
+1. The supplied key is already in ignored `.env`; keep it server-side.
 2. Run the documented setup/start commands.
 3. Open `http://localhost:3000`.
 4. Deploy using `docs/deployment.md`.
+
+## ACTIVE LOCAL RUNTIME
+
+Docker Compose serves http://localhost:3000 with the supplied server-side key. The active database is in `agentvora_agentvora-data`; existing local history was imported with an integrity check. `data/agentvora.db` remains a separate backup/source for local development, not a live mirror of later Docker writes. Seven validation runs and 55 genuine reports are retained. Research scheduling is paused because of the account daily allowance. After sufficient allowance replenishes, choose a schedule/asset count within that allowance before enabling it. The default six-asset, 30-minute schedule needs substantially more than a 200,000-token daily allowance.
