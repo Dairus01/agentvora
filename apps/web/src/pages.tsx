@@ -59,7 +59,7 @@ function Curve({ values }: { values: number[] }) {
   if (values.length < 2)
     return (
       <Empty title="Your track record starts here">
-        The equity curve grows as the paper portfolio is marked to market. No
+        The equity curve grows as the testnet portfolio is marked to market. No
         historical returns have been fabricated.
       </Empty>
     );
@@ -76,7 +76,7 @@ function Curve({ values }: { values: number[] }) {
       className="equity-curve"
       viewBox="0 0 1000 210"
       role="img"
-      aria-label="Paper portfolio equity curve"
+      aria-label="Testnet portfolio equity curve"
     >
       <line x1="0" y1="180" x2="1000" y2="180" stroke="var(--border)" />
       <polyline
@@ -101,7 +101,7 @@ export function PortfolioPage() {
   return (
     <main className="page">
       <PageTitle
-        label="RISK & PORTFOLIO DESK · PAPER"
+        label="RISK & PORTFOLIO DESK · TESTNET"
         title="Portfolio intelligence."
         description="A persistent record of capital, exposure and every executed decision."
       />
@@ -125,7 +125,7 @@ export function PortfolioPage() {
       <div className="portfolio-charts">
         <section className="panel">
           <div className="panel-title">
-            EQUITY CURVE <span className="tag">PAPER · SINCE INCEPTION</span>
+            EQUITY CURVE <span className="tag">TESTNET · SINCE INCEPTION</span>
           </div>
           <Curve values={history.map((x) => x.equity)} />
         </section>
@@ -207,7 +207,7 @@ export function PortfolioPage() {
           </div>
         ) : (
           <Empty title="Capital ready. No positions yet.">
-            Approved research decisions will open paper positions here. Your
+            Approved research decisions will open testnet positions here. Your
             starting cash remains uninvested.
           </Empty>
         )}
@@ -275,9 +275,9 @@ export function PortfolioPage() {
             </table>
           </div>
         ) : (
-          <Empty title="Every fill will have a paper trail.">
+          <Empty title="Every fill will have a testnet trail.">
             Orders, transaction costs and realized results appear after the
-            first approved paper execution.
+            first approved testnet execution.
           </Empty>
         )}
       </section>
@@ -423,7 +423,7 @@ export function DecisionPage() {
         ← Decision archive
       </Link>
       <PageTitle
-        label={"PAPER · " + date(d.timestamp)}
+        label={"TESTNET · " + date(d.timestamp)}
         title={d.symbol + " / " + d.action}
         description="Explicit research conclusion and deterministic execution record."
       />
@@ -447,7 +447,7 @@ export function DecisionPage() {
       <div className="notice">
         <ShieldCheck size={18} />
         {d.execution_reason ||
-          "Deterministic portfolio constraints passed. Paper execution recorded."}
+          "Deterministic portfolio constraints passed. Testnet execution recorded."}
       </div>
       <div className="decision-reports">
         {sections.map(([title, report]) => (
@@ -556,7 +556,7 @@ export function CouncilPage({
           <div className="connector">↓ DETERMINISTIC CONSTRAINTS ↓</div>
           <div className="execution-node">
             <ShieldCheck size={20} />
-            <b>PAPER EXECUTION</b>
+            <b>TESTNET EXECUTION</b>
             <span className="tag">NO LEVERAGE</span>
           </div>
         </div>
@@ -581,7 +581,7 @@ export function SourcePage({ status }: { status?: Status }) {
       <PageTitle
         label="OPEN ARCHITECTURE"
         title="Inspect the system."
-        description="From the market snapshot to the final paper fill. The source makes every boundary reviewable."
+        description="From the market snapshot to the final testnet fill. The source makes every boundary reviewable."
       />
       <div className="source-hero panel">
         <Code2 size={42} />
@@ -590,7 +590,7 @@ export function SourcePage({ status }: { status?: Status }) {
           <p>
             React interface. Python services. Multi agent research.
             <br />
-            Deterministic analytics and a persistent paper ledger.
+            Deterministic analytics and a persistent testnet ledger.
           </p>
           <div className="actions">
             {status?.source_available ? (
@@ -628,7 +628,7 @@ export function SourcePage({ status }: { status?: Status }) {
             "Independent analyst reports, bull and bear debate, research synthesis and risk review.",
           ],
           [
-            "PAPER EXECUTION",
+            "TESTNET EXECUTION",
             "Hard portfolio constraints, idempotent orders and persistent position accounting.",
           ],
           [
@@ -650,7 +650,7 @@ export function SourcePage({ status }: { status?: Status }) {
           dependency notices are included in the source package.
         </p>
         <p className="muted">
-          Research and paper trading only. Results are simulated; there is no
+          Research and testnet trading only. Results are simulated; there is no
           live-money execution path.
         </p>
       </section>
