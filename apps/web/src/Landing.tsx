@@ -181,7 +181,7 @@ export default function Landing() {
               <Label>
                 <ShieldCheck size={14} /> EXECUTION
               </Label>
-              <b>Paper only</b>
+              <b>Testnet only</b>
             </div>
             <div>
               <Label>
@@ -228,7 +228,7 @@ export default function Landing() {
             [
               Scale,
               "Built for clarity",
-              "Bull and bear researchers debate the evidence. A deterministic risk gate evaluates every paper order.",
+              "Bull and bear researchers debate the evidence. A deterministic risk gate evaluates every testnet order.",
             ],
             [
               MessageSquare,
@@ -248,7 +248,7 @@ export default function Landing() {
             [
               ShieldCheck,
               "Accountable decisions",
-              "Research, constraints and paper fills form one persistent record that you can inspect.",
+              "Research, constraints and testnet fills form one persistent record that you can inspect.",
             ],
           ].map(([Icon, title, body]) => {
             const I = Icon as typeof Search;
@@ -362,7 +362,7 @@ export default function Landing() {
         <p>
           Pick an asset, follow the research and inspect every decision.
           <br />
-          An autonomous paper portfolio. Institutional tone. No hype.
+          An autonomous testnet portfolio. Institutional tone. No hype.
         </p>
         <div className="actions">
           <Link className="button primary" to="/terminal">
@@ -373,7 +373,7 @@ export default function Landing() {
           </Link>
         </div>
         <small className="mono muted">
-          NO SIGNUP · NO BROKER CONNECT · PAPER EXECUTION
+          NO SIGNUP · NO BROKER CONNECT · TESTNET EXECUTION
         </small>
       </section>
       <footer>
@@ -381,7 +381,7 @@ export default function Landing() {
         <p>
           Autonomous market intelligence.
           <br />
-          Research and paper trading. Capital is simulated.
+          Research and testnet trading. Capital is simulated.
         </p>
         <div>
           <Link to="/terminal">Terminal</Link>
