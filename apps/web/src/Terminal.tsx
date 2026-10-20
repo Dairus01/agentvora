@@ -176,7 +176,7 @@ export default function Terminal({
           {!visible.length && <p className="muted pad">No matching assets.</p>}
         </div>
         <div className="watch-footer">
-          <Label>PAPER PORTFOLIO</Label>
+          <Label>TESTNET PORTFOLIO</Label>
           <b className="mono">{money(book?.equity)}</b>
           <span className="muted">Persistent · No leverage</span>
         </div>
@@ -282,7 +282,7 @@ export default function Terminal({
               ? "AS OF " + new Date(quote?.timestamp || snapshot.market_timestamp).toLocaleString()
               : "NO SYNTHETIC DATA"}
           </span>
-          <span>PAPER MARKERS · {interval.toUpperCase()} HISTORY{chartStyle === "heikin" ? " · DERIVED HEIKIN ASHI" : ""}</span>
+          <span>TESTNET MARKERS · {interval.toUpperCase()} HISTORY{chartStyle === "heikin" ? " · DERIVED HEIKIN ASHI" : ""}</span>
         </div>
         {quoteState === "market closed" && <div className="market-closure">US stock session is closed. Showing the last session; prices resume when trading opens. <button onClick={() => setSelected("BTC/USD")}>View live Bitcoin</button></div>}
         <div className="analytics-bar">
@@ -307,7 +307,7 @@ export default function Terminal({
           <div>
             <ShieldCheck size={17} />
             <span>
-              Research is advisory. Every paper order passes deterministic risk
+              Research is advisory. Every testnet order passes deterministic risk
               checks.
             </span>
           </div>
