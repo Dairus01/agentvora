@@ -80,7 +80,7 @@ class Orchestrator:
                 id=uid(),
                 symbol=symbol,
                 status="queued",
-                payload={"trigger": trigger, "cycle": cycle, "mode": "PAPER"},
+                payload={"trigger": trigger, "cycle": cycle, "mode": "TESTNET"},
             )
             db.add(run)
             db.flush()
@@ -187,7 +187,7 @@ class Orchestrator:
                 reference_price=snapshot["price"],
                 sources=[{"url": n["url"], "title": n["title"]} for n in news],
                 confidence_label="Advisory evidence score",
-                mode="PAPER",
+                mode="TESTNET",
             )
             quote = await market.quote(symbol)
             async with self.broker_lock:
@@ -215,7 +215,7 @@ class Orchestrator:
                 "order.created",
                 run_id,
                 asset=symbol,
-                headline="Paper order evaluated",
+                headline="Testnet order evaluated",
                 order=order_result,
             )
             if order_result["status"] == "filled":
@@ -223,7 +223,7 @@ class Orchestrator:
                     "order.filled",
                     run_id,
                     asset=symbol,
-                    headline="Paper fill recorded",
+                    headline="Testnet fill recorded",
                     order=order_result,
                 )
                 await bus.emit(
@@ -232,7 +232,7 @@ class Orchestrator:
                     else "position.closed",
                     run_id,
                     asset=symbol,
-                    headline="Paper position updated",
+                    headline="Testnet position updated",
                 )
             await bus.emit(
                 "portfolio.updated",
