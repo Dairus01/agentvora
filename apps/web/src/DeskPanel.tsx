@@ -171,7 +171,7 @@ export default function DeskPanel({
       </div>
       <div className="panel-foot">
         <Activity size={12} /> MULTI-AGENT DESK{" "}
-        <span className="positive">PAPER</span>
+        <span className="positive">TESTNET</span>
       </div>
     </aside>
   );
