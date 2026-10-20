@@ -165,7 +165,7 @@ def one(model, ident):
 def health():
     with Session() as db:
         db.execute(select(1))
-    return {"status": "ok", "execution": "PAPER"}
+    return {"status": "ok", "execution": "TESTNET"}
 
 
 @app.get("/api/assets")
@@ -198,7 +198,7 @@ def status():
         else "waiting_for_configuration"
         if settings.autonomous_enabled
         else "paused",
-        "execution": "PAPER",
+        "execution": "TESTNET",
         "queue_depth": orchestrator.queue.qsize(),
         "interval_minutes": settings.autonomous_interval_minutes,
         "source_repository_url": settings.source_repository_url
