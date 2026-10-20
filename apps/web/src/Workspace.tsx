@@ -41,7 +41,7 @@ export default function Workspace() {
             <ArrowLeft size={17} />
           </Link>
           <Brand />
-          <span className="tag paper">PAPER</span>
+          <span className="tag testnet">TESTNET</span>
         </div>
         <button
           className="icon-button mobile-menu"
@@ -163,7 +163,7 @@ export default function Workspace() {
               "CONNECTING"}
           </b>
         </span>
-        <span className="positive">PAPER EXECUTION · ACTIVE</span>
+        <span className="positive">TESTNET EXECUTION · ACTIVE</span>
       </div>
     </div>
   );
