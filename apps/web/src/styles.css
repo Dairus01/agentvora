@@ -222,7 +222,7 @@ td {
   border-radius: 5px;
   line-height: 1;
 }
-.paper {
+.testnet {
   color: var(--accent);
   background: var(--green-wash);
 }
